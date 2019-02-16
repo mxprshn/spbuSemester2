@@ -22,15 +22,15 @@ namespace MatrixSort
             valueB = buffer;
         }
 
-        private void SwapColoumns(int coloumnA, int coloumnB)
+        private void SwapColumns(int columnA, int columnB)
         {
             for (var i = 0; i < height; ++i)
             {
-                Swap(ref elements[i, coloumnA], ref elements[i, coloumnB]);
+                Swap(ref elements[i, columnA], ref elements[i, columnB]);
             }
         }
 
-        public void SortColoumns()
+        public void SortColumns()
         {
             for (var i = 0; i < width; ++i)
             {
@@ -48,7 +48,7 @@ namespace MatrixSort
 
                 if (minimumPosition != i)
                 {
-                    SwapColoumns(i, minimumPosition);
+                    SwapColumns(i, minimumPosition);
                 }
             }
         }
