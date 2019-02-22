@@ -2,11 +2,11 @@
 
 namespace SinglyLinkedList
 {
-    class List
+    class List : IList
     {
         private class Node
         {
-            public int Value { get; }
+            public int Value { get; set; }
             public Node Next { get; set; }
 
             public Node(int newValue, Node newNext)
@@ -18,17 +18,13 @@ namespace SinglyLinkedList
 
         private Node head = null;
         public int Length { get; private set; } = 0;
-
-        public bool IsEmpty()
-        {
-            return head == null;
-        }
+        public bool IsEmpty => head == null;
 
         private Node FindNode(int position)
         {
             var temp = head;
 
-            for (var i = Length - 1; i > position; --i)
+            for (var i = Length - 1; ((i > position) && (i > 0)); --i)
             {
                 temp = temp.Next;
             }
@@ -42,16 +38,78 @@ namespace SinglyLinkedList
             ++Length;
         }
 
-        public void InsertNext(int newValue, int previousPosition)
+        public void InsertBefore(int newValue, int nextPosition)
         {
+            if (nextPosition >= Length)
+            {
+                Insert(newValue);
+            }
+            else
+            {
+                var nextNode = FindNode(nextPosition);
+                nextNode.Next = new Node(newValue, nextNode.Next);
+                ++Length;
+            }
+        }
 
+        public void InsertAfter(int newValue, int previousPosition)
+        {
+            InsertBefore(newValue, previousPosition + 1);
         }
 
         public void Remove()
         {
-            head = head.Next;
+            if (!IsEmpty)
+            {
+                head = head.Next;
+                --Length;
+            }            
         }
 
+        public void RemoveBefore(int nextPosition)
+        {
+            if (nextPosition == Length)
+            {
+                Remove();
+            }
+            else if ((nextPosition > 0) && (nextPosition < Length))
+            {
+                var nextNode = FindNode(nextPosition);
+                nextNode.Next = nextNode.Next?.Next;
+                --Length;
+            }
+        }
 
+        public void RemoveAfter(int previousPosition)
+        {
+            RemoveBefore(previousPosition + 2);
+        }
+
+        public int this[int position]
+        {
+            get => FindNode(position)?.Value ?? -1;
+
+            set
+            {
+                if (!IsEmpty)
+                {
+                    FindNode(position).Value = value;
+                }                
+            }
+        }
+
+        public void PrintStatus()
+        {
+            Console.WriteLine($"Is list empty? : {IsEmpty}.");
+            Console.WriteLine($"List contains {Length} elements.");
+            Console.Write($"List elements: ");
+
+            for (var i = 0; i < Length; ++i)
+            {
+                Console.Write($"{this[i]} ");
+            }
+
+            Console.WriteLine("\n");
+        }
     }
 }
