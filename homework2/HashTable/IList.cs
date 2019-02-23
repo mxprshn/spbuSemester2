@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace SinglyLinkedList
 {
     public interface IList
@@ -11,7 +12,7 @@ namespace SinglyLinkedList
         void Remove();
         void RemoveAfter(int previousPosition);
         void RemoveBefore(int nextPosition);
-        string this[int position] { get; set; }
+        Tuple<string, string> this[int position] { get; set; }
         string this[string key] { get; set; }
     }
 }

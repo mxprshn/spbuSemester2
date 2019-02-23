@@ -16,7 +16,7 @@ namespace HashTable
             Console.WriteLine($"{test["2"]}");
             Console.WriteLine($"{test["1"]}");
             Console.WriteLine($"{test["3"]}");
-            Console.WriteLine($"{test["0"]}");
+            Console.WriteLine($"{-10 % 3}");
 
 
             Console.ReadKey();

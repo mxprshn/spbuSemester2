@@ -104,16 +104,16 @@ namespace SinglyLinkedList
             RemoveBefore(previousPosition + 2);
         }
 
-        public string this[int position]
+        public Tuple<string, string> this[int position]
         {
-            get => FindNode(position)?.Data.Item2;
+            get => FindNode(position)?.Data;
 
             set
             {
                 if (!IsEmpty)
                 {
                     var targetNode = FindNode(position);
-                    targetNode.Data = new Tuple<string, string>(targetNode.Data.Item1, value);
+                    targetNode.Data = value;
                 }                
             }
         }
