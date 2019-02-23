@@ -1,5 +1,4 @@
 ﻿using System;
-using SinglyLinkedList;
 
 namespace HashTable
 {
@@ -7,16 +6,30 @@ namespace HashTable
     {
         static void Main(string[] args)
         {
-            List test = new List();
-            test.Insert(77);
-            test.Insert(11);
-            test.Insert(22);
-            test.Insert(14);
-            test.RemoveLast();
-            test.Remove(0);
-            test.Remove(1);
-            test.Remove(1);
+            Set test = new Set();
+            Console.WriteLine("0 - Exit; 1 - Add a value; 2 - Remove a value; 3 - Check a value for existence\n");
+            string command = "";
 
+            while (command != "0")
+            {
+                command = Console.ReadLine();
+
+                if (command == "1")
+                {
+                    Console.Write("Enter a value to add: ");
+                    test.Add(int.Parse(Console.ReadLine()));
+                }
+                else if (command == "2")
+                {
+                    Console.Write("Enter a value to remove: ");
+                    test.Remove(int.Parse(Console.ReadLine()));
+                }
+                else if (command == "3")
+                {
+                    Console.Write("Enter a value to find: ");
+                    Console.WriteLine($"{test.Exists(int.Parse(Console.ReadLine()))}");
+                }
+            }
         }
     }
 }

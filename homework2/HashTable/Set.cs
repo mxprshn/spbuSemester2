@@ -6,8 +6,18 @@ namespace HashTable
     class Set : ISet
     {
         private const int StartSize = 5;
-        private List[] buckets = new List[StartSize];
-        public int Size { get; private set; }        
+        private List[] buckets;
+        public int Size { get; private set; }
+        
+        public Set()
+        {
+            buckets = new List[StartSize];
+
+            for (var i = 0; i < buckets.Length; ++i)
+            {
+                buckets[i] = new List();
+            }
+        }
 
         private float LoadFactor()
         {
@@ -16,7 +26,6 @@ namespace HashTable
 
         private void Expand()
         {
-            Array.Resize<List>(ref buckets, buckets.Length * 2);
             var buffer = new int[Size];
             int currentPosition = 0;
 
@@ -28,6 +37,13 @@ namespace HashTable
                     currentList.RemoveLast();
                     ++currentPosition;
                 }
+            }
+
+            Array.Resize<List>(ref buckets, buckets.Length * 2);
+
+            for (var i = buckets.Length / 2; i < buckets.Length; ++i)
+            {
+                buckets[i] = new List();
             }
 
             foreach (var currentValue in buffer)
