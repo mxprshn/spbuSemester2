@@ -15,21 +15,21 @@ namespace SinglyLinkedList
 
             test.PrintStatus();
 
-            test.RemoveAfter(3);
-            test.RemoveAfter(0);
-            test.RemoveBefore(test.Length);
+            test.Remove(2);
+            test.RemoveLast();
+            test.Remove(test.Length - 1);
 
             test.PrintStatus();
 
-            test.InsertAfter(-1, 5);
-            test.InsertAfter(-2, test.Length);
+            test.InsertBefore(-1, 5);
+            test.InsertBefore(-2, test.Length);
             test.InsertBefore(-3, 0);
 
             test.PrintStatus();
 
             for (var i = 0; i < 10; ++i)
             {
-                test.Remove();
+                test.RemoveLast();
             }
 
             test.PrintStatus();

@@ -52,37 +52,27 @@ namespace SinglyLinkedList
             }
         }
 
-        public void InsertAfter(int newValue, int previousPosition)
-        {
-            InsertBefore(newValue, previousPosition + 1);
-        }
-
-        public void Remove()
+        public void RemoveLast()
         {
             if (!IsEmpty)
             {
                 head = head.Next;
                 --Length;
-            }            
+            }
         }
 
-        public void RemoveBefore(int nextPosition)
+        public void Remove(int position)
         {
-            if (nextPosition == Length)
+            if (position >= Length - 1)
             {
-                Remove();
+                RemoveLast();
             }
-            else if ((nextPosition > 0) && (nextPosition < Length))
+            else if ((position >= 0) && (position < Length - 1))
             {
-                var nextNode = FindNode(nextPosition);
+                var nextNode = FindNode(position + 1);
                 nextNode.Next = nextNode.Next?.Next;
                 --Length;
             }
-        }
-
-        public void RemoveAfter(int previousPosition)
-        {
-            RemoveBefore(previousPosition + 2);
         }
 
         public int this[int position]
@@ -94,8 +84,25 @@ namespace SinglyLinkedList
                 if (!IsEmpty)
                 {
                     FindNode(position).Value = value;
-                }                
+                }
             }
+        }
+
+        public bool Exists(int value, out int position)
+        {
+            var temp = head;
+
+            for (var i = Length; i > 0; --i)
+            {
+                if (temp.Value == value)
+                {
+                    position = i - 1;
+                    return true;
+                }
+            }
+
+            position = -1;
+            return false;
         }
 
         public void PrintStatus()
