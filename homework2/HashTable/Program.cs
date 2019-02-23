@@ -7,19 +7,16 @@ namespace HashTable
     {
         static void Main(string[] args)
         {
-            var test = new List();
-            test.Insert("1", "A");
-            test.Insert("2", "B");
-            test.InsertBefore("0", "Z", 0);
-            test.InsertAfter("3", "C", 2);
+            List test = new List();
+            test.Insert(77);
+            test.Insert(11);
+            test.Insert(22);
+            test.Insert(14);
+            test.RemoveLast();
+            test.Remove(0);
+            test.Remove(1);
+            test.Remove(1);
 
-            Console.WriteLine($"{test["2"]}");
-            Console.WriteLine($"{test["1"]}");
-            Console.WriteLine($"{test["3"]}");
-            Console.WriteLine($"{-10 % 3}");
-
-
-            Console.ReadKey();
         }
     }
 }

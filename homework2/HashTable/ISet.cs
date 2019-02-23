@@ -1,11 +1,11 @@
 ﻿
 namespace HashTable
 {
-    interface IDictionary
+    interface ISet
     {
-        void Insert(string key, string value);
-        void Remove(string key);
-        string GetValue(string key);
-        bool Exists(string key);
+        int Size { get; }
+        void Add(int value);
+        void Remove(int value);
+        bool Exists(int value);
     }
 }
