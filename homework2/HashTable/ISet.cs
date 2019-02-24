@@ -4,8 +4,8 @@ namespace HashTable
     interface ISet
     {
         int Size { get; }
-        void Add(int value);
-        void Remove(int value);
+        bool Add(int value);
+        bool Remove(int value);
         bool Exists(int value);
     }
 }

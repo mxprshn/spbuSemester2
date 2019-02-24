@@ -38,41 +38,50 @@ namespace SinglyLinkedList
             ++Length;
         }
 
-        public void InsertBefore(int newValue, int nextPosition)
+        public bool InsertBefore(int newValue, int nextPosition)
         {
-            if (nextPosition >= Length)
+            if ((nextPosition >= Length) || (nextPosition < 0))
             {
-                Insert(newValue);
+                return false;
             }
-            else
-            {
-                var nextNode = FindNode(nextPosition);
-                nextNode.Next = new Node(newValue, nextNode.Next);
-                ++Length;
-            }
+
+            var nextNode = FindNode(nextPosition);
+            nextNode.Next = new Node(newValue, nextNode.Next);
+            ++Length;
+            return true;            
         }
 
-        public void RemoveLast()
+        public bool RemoveLast()
         {
-            if (!IsEmpty)
+            if (IsEmpty)
             {
-                head = head.Next;
-                --Length;
-            }            
+                return false;
+            }
+
+            head = head.Next;
+            --Length;
+            return true;
         }
 
-        public void Remove(int position)
+        public bool Remove(int position)
         {
-            if (position >= Length - 1)
+            if ((position < 0) || (position >= Length))
+            {
+                return false;
+            }
+
+            if (position == Length - 1)
             {
                 RemoveLast();
             }
-            else if ((position >= 0) && (position < Length - 1))
+            else
             {
                 var nextNode = FindNode(position + 1);
                 nextNode.Next = nextNode.Next?.Next;
                 --Length;
             }
+
+            return true;
         }
 
         public int this[int position]
@@ -84,7 +93,7 @@ namespace SinglyLinkedList
                 if (!IsEmpty)
                 {
                     FindNode(position).Value = value;
-                }                
+                }
             }
         }
 

@@ -17,12 +17,12 @@ namespace HashTable
                 if (command == "1")
                 {
                     Console.Write("Enter a value to add: ");
-                    test.Add(int.Parse(Console.ReadLine()));
+                    Console.WriteLine($"{test.Add(int.Parse(Console.ReadLine()))}");
                 }
                 else if (command == "2")
                 {
                     Console.Write("Enter a value to remove: ");
-                    test.Remove(int.Parse(Console.ReadLine()));
+                    Console.WriteLine($"{test.Remove(int.Parse(Console.ReadLine()))}");
                 }
                 else if (command == "3")
                 {

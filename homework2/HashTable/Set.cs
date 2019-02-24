@@ -52,27 +52,33 @@ namespace HashTable
             }
         }
 
-        public void Add(int value)
+        public bool Add(int value)
         {
+            if (Exists(value))
+            {
+                return false;
+            }
+
             if (LoadFactor() > 1.0)
             {
                 Expand();
             }
 
-            if (!Exists(value))
-            {
-                buckets[Math.Abs(value) % buckets.Length].Insert(value);
-                ++Size;
-            }
+            buckets[Math.Abs(value) % buckets.Length].Insert(value);
+            ++Size;
+            return true;
         }
 
-        public void Remove(int value)
+        public bool Remove(int value)
         {
-            if (buckets[Math.Abs(value) % buckets.Length].Exists(value, out int position))
+            if (!buckets[Math.Abs(value) % buckets.Length].Exists(value, out int position))
             {
-                buckets[Math.Abs(value) % buckets.Length].Remove(position);
-                --Size;
+                return false;
             }
+
+            buckets[Math.Abs(value) % buckets.Length].Remove(position);
+            --Size;
+            return true;
         }
 
         public bool Exists(int value)
