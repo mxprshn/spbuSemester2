@@ -7,5 +7,6 @@ namespace StackCalculator
         void Push(int data);
         int Pop(out bool isSuccessful);
         int Peek(out bool isSuccessful);
+        void Clear();
     }
 }

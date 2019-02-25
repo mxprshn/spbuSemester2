@@ -46,5 +46,13 @@ namespace StackCalculator
             isSuccessful = true;
             return head.Data;
         }
+
+        public void Clear()
+        {
+            while (!IsEmpty)
+            {
+                _ = Pop(out _);
+            }
+        }
     }
 }

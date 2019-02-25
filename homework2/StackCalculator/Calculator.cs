@@ -75,17 +75,22 @@ namespace StackCalculator
 
             catch (FormatException)
             {
-                ConsoleColor color = Console.ForegroundColor;
-                Console. 
-                Console.WriteLine("Incorrect input");
-                return -1;
+                ConsoleColor previousColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("ACHTUNG! УВАГА! Incorrect input.");
+                Console.ForegroundColor = previousColor;
             }
 
             catch (DivideByZeroException)
             {
-                Console.WriteLine("Dividing by zero");
-                return -1;
+                ConsoleColor previousColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("ACHTUNG! УВАГА! Dividing by zero.");
+                Console.ForegroundColor = previousColor;
             }
+
+            stack.Clear();
+            return -1;
         }
     }
 }

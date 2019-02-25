@@ -43,5 +43,11 @@ namespace StackCalculator
             isSuccessful = true;
             return elements[pushPosition - 1];
         }
+
+        public void Clear()
+        {
+            Array.Clear(elements, 0, pushPosition);
+            pushPosition = 0;
+        }
     }
 }
