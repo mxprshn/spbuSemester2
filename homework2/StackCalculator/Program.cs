@@ -28,7 +28,7 @@ namespace StackCalculator
                 var expression = Console.ReadLine();
 
                 Console.WriteLine($"Calculator using stack using list says: {LCalculator.Evaluate(expression)}");
-                Console.WriteLine($"Calculator using stack using array says: {LCalculator.Evaluate(expression)}");
+                Console.WriteLine($"Calculator using stack using array says: {ACalculator.Evaluate(expression)}");
             }
         }
     }
