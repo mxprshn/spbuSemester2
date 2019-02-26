@@ -24,11 +24,24 @@ namespace StackCalculator
                     continue;
                 }
 
-                Console.Write("Enter an expression to calculate: ");
-                var expression = Console.ReadLine();
+                try
+                {
+                    Console.Write("Enter an expression to calculate: ");
+                    var expression = Console.ReadLine();
 
-                Console.WriteLine($"Calculator using stack using list says: {LCalculator.Evaluate(expression)}");
-                Console.WriteLine($"Calculator using stack using array says: {ACalculator.Evaluate(expression)}");
+                    Console.WriteLine($"Calculator using stack using list says: {LCalculator.Evaluate(expression)}");
+                    Console.WriteLine($"Calculator using stack using array says: {ACalculator.Evaluate(expression)}");
+                }
+
+                catch(FormatException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+
+                catch(DivideByZeroException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
             }
         }
     }

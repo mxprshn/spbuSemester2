@@ -15,7 +15,7 @@ namespace StackCalculator
             }
         }
 
-        private StackElement head = null;
+        private StackElement head;
         public bool IsEmpty => head == null;
 
         public void Push(int data)

@@ -15,82 +15,69 @@ namespace StackCalculator
         {
             string[] operands = expression.Split(' ');
 
-            try
+            foreach (string operand in operands)
             {
-                foreach (string operand in operands)
+                if (int.TryParse(operand, out int number))
                 {
-                    if (int.TryParse(operand, out int number))
+                    stack.Push(number);
+                }
+                else if (char.TryParse(operand, out char operation))
+                {
+                    int operand1 = stack.Pop(out bool popResult1);
+                    int operand2 = stack.Pop(out bool popResult2);
+
+                    if (!popResult1 || !popResult2)
                     {
-                        stack.Push(number);
+                        stack.Clear();
+                        throw new FormatException("Incorrect input");
                     }
-                    else if (char.TryParse(operand, out char operation))
+
+                    switch (operation)
                     {
-                        int operand1 = stack.Pop(out bool popResult1);
-                        int operand2 = stack.Pop(out bool popResult2);
+                        case '+':
+                            {
+                                stack.Push(operand1 + operand2);
+                                break;
+                            }
+                        case '-':
+                            {
+                                stack.Push(operand2 - operand1);
+                                break;
+                            }
+                        case '*':
+                            {
+                                stack.Push(operand1 * operand2);
+                                break;
+                            }
+                        case '/':
+                            {
+                                if (operand1 == 0)
+                                {
+                                    stack.Clear();
+                                    throw new DivideByZeroException("Division by zero");
+                                }
 
-                        if (!popResult1 || !popResult2)
-                        {
-                            throw new FormatException();
-                        }
-
-                        switch (operation)
-                        {
-                            case '+':
-                                {
-                                    stack.Push(operand1 + operand2);
-                                    break;
-                                }
-                            case '-':
-                                {
-                                    stack.Push(operand2 - operand1);
-                                    break;
-                                }
-                            case '*':
-                                {
-                                    stack.Push(operand1 * operand2);
-                                    break;
-                                }
-                            case '/':
-                                {
-                                    stack.Push(operand2 / operand1);
-                                    break;
-                                }
-                            default:
-                                {
-                                    throw new FormatException();
-                                }
-                        }
+                                stack.Push(operand2 / operand1);
+                                break;
+                            }
+                        default:
+                            {
+                                stack.Clear();
+                                throw new FormatException("Incorrect input");
+                            }
                     }
                 }
-
-                int value = stack.Pop(out bool popResult);
-
-                if (!popResult || !stack.IsEmpty)
-                {
-                    throw new FormatException();
-                }
-
-                return value;
             }
 
-            catch (FormatException)
+            int value = stack.Pop(out bool popResult);
+
+            if (!popResult || !stack.IsEmpty)
             {
-                ConsoleColor previousColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("ACHTUNG! УВАГА! Incorrect input.");
-                Console.ForegroundColor = previousColor;
+                stack.Clear();
+                throw new FormatException("Incorrect input");
             }
 
-            catch (DivideByZeroException)
-            {
-                ConsoleColor previousColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("ACHTUNG! УВАГА! Dividing by zero.");
-                Console.ForegroundColor = previousColor;
-            }
-
-            stack.Clear();
-            return -1;
+            return value;
         }
     }
 }

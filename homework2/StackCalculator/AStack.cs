@@ -6,7 +6,7 @@ namespace StackCalculator
     {
         private const int StartSize = 2;
         private int[] elements = new int[StartSize];
-        private int pushPosition = 0;
+        private int pushPosition;
         public bool IsEmpty => pushPosition == 0;
 
         public void Push(int data)
