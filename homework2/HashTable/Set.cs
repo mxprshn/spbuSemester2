@@ -19,6 +19,11 @@ namespace HashTable
             }
         }
 
+        private int Hash(int value)
+        {
+            return Math.Abs(value);
+        }
+
         private float LoadFactor()
         {
             return (float)Size / buckets.Length;
@@ -33,8 +38,8 @@ namespace HashTable
             {
                 while (!currentList.IsEmpty)
                 {
-                    buffer[currentPosition] = currentList[currentList.Length];
-                    currentList.RemoveLast();
+                    buffer[currentPosition] = currentList[0];
+                    currentList.RemoveFirst();
                     ++currentPosition;
                 }
             }
@@ -64,26 +69,28 @@ namespace HashTable
                 Expand();
             }
 
-            buckets[Math.Abs(value) % buckets.Length].Insert(value);
+            buckets[Hash(value) % buckets.Length].InsertFirst(value);
             ++Size;
             return true;
         }
 
         public bool Remove(int value)
         {
-            if (!buckets[Math.Abs(value) % buckets.Length].Exists(value, out int position))
+            int targetPosition = buckets[Hash(value) % buckets.Length].FindPosition(value);
+
+            if (targetPosition < 0)
             {
                 return false;
             }
 
-            buckets[Math.Abs(value) % buckets.Length].Remove(position);
+            buckets[Hash(value) % buckets.Length].Remove(targetPosition);
             --Size;
             return true;
         }
 
         public bool Exists(int value)
         {
-            return buckets[Math.Abs(value) % buckets.Length].Exists(value, out int position);
+            return buckets[Hash(value) % buckets.Length].Exists(value);
         }
     }
 }

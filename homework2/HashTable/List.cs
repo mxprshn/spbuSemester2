@@ -9,22 +9,32 @@ namespace SinglyLinkedList
             public int Value { get; set; }
             public Node Next { get; set; }
 
-            public Node(int newValue, Node newNext)
+            public Node(int newValue, Node newNext = null)
             {
                 Value = newValue;
                 Next = newNext;
             }
         }
 
-        private Node head = null;
-        public int Length { get; private set; } = 0;
+        private Node head;
+        public int Length { get; private set; }
         public bool IsEmpty => head == null;
 
         private Node FindNode(int position)
         {
+            if (IsEmpty)
+            {
+                throw new InvalidOperationException("The list was empty");
+            }
+
+            if (position < 0 || position >= Length)
+            {
+                throw new ArgumentOutOfRangeException("Incorrect index of position");
+            }
+
             var temp = head;
 
-            for (var i = Length - 1; ((i > position) && (i > 0)); --i)
+            for (var i = 0; i < position; ++i)
             {
                 temp = temp.Next;
             }
@@ -32,86 +42,83 @@ namespace SinglyLinkedList
             return temp;
         }
 
-        public void Insert(int newValue)
+        public void InsertFirst(int newValue)
         {
             head = new Node(newValue, head);
             ++Length;
         }
 
-        public bool InsertBefore(int newValue, int nextPosition)
+        public void InsertAfter(int newValue, int previousPosition)
         {
-            if ((nextPosition >= Length) || (nextPosition < 0))
-            {
-                return false;
-            }
-
-            var nextNode = FindNode(nextPosition);
-            nextNode.Next = new Node(newValue, nextNode.Next);
-            ++Length;
-            return true;            
+            var previousNode = FindNode(previousPosition);
+            previousNode.Next = new Node(newValue, previousNode.Next);
+            ++Length;         
         }
 
-        public bool RemoveLast()
+        public void RemoveFirst()
         {
             if (IsEmpty)
             {
-                return false;
+                throw new InvalidOperationException("The list was empty");
             }
 
             head = head.Next;
             --Length;
-            return true;
         }
 
-        public bool Remove(int position)
+        public void Remove(int position)
         {
-            if ((position < 0) || (position >= Length))
+            if (position == 0)
             {
-                return false;
+                RemoveFirst();
+                return;
             }
 
-            if (position == Length - 1)
+            if (position == Length)
             {
-                RemoveLast();
-            }
-            else
-            {
-                var nextNode = FindNode(position + 1);
-                nextNode.Next = nextNode.Next?.Next;
-                --Length;
+                throw new ArgumentOutOfRangeException("Incorrect index of position");
             }
 
-            return true;
+            var previousNode = FindNode(position - 1);
+            previousNode.Next = previousNode.Next.Next;
+            --Length;
         }
 
         public int this[int position]
         {
-            get => FindNode(position)?.Value ?? -1;
+            get => FindNode(position).Value;
 
-            set
-            {
-                if (!IsEmpty)
-                {
-                    FindNode(position).Value = value;
-                }
-            }
+            set => FindNode(position).Value = value;
         }
 
-        public bool Exists(int value, out int position)
+        public bool Exists(int value)
         {
             var temp = head;
 
-            for (var i = Length; i > 0; --i)
+            for (var i = 0; i < Length; ++i)
             {
                 if (temp.Value == value)
                 {
-                    position = i - 1;
                     return true;
                 }
             }
 
-            position = -1;
             return false;
+        }
+
+        public int FindPosition(int value)
+        {
+            var temp = head;
+
+            for (var i = 0; i < Length; ++i)
+            {
+                if (temp.Value == value)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
     }
 }
