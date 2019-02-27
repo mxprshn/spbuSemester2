@@ -6,8 +6,8 @@ namespace StackCalculator
     {
         static void Main(string[] args)
         {
-            var LCalculationStack = new LStack();
-            var ACalculationStack = new AStack();
+            var LCalculationStack = new ListStack();
+            var ACalculationStack = new ArrayStack();
 
             var LCalculator = new Calculator(LCalculationStack);
             var ACalculator = new Calculator(ACalculationStack);
