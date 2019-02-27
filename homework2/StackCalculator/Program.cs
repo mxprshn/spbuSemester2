@@ -6,11 +6,11 @@ namespace StackCalculator
     {
         static void Main(string[] args)
         {
-            LStack LCalculationStack = new LStack();
-            AStack ACalculationStack = new AStack();
+            var LCalculationStack = new LStack();
+            var ACalculationStack = new AStack();
 
-            Calculator LCalculator = new Calculator(LCalculationStack);
-            Calculator ACalculator = new Calculator(ACalculationStack);
+            var LCalculator = new Calculator(LCalculationStack);
+            var ACalculator = new Calculator(ACalculationStack);
 
             Console.WriteLine("0 -- Exit; 1 -- No, let's calculate something");
             string command = "";

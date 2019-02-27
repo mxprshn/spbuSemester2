@@ -23,8 +23,8 @@ namespace StackCalculator
                 }
                 else if (char.TryParse(operand, out char operation))
                 {
-                    int operand1 = stack.Pop(out bool popResult1);
-                    int operand2 = stack.Pop(out bool popResult2);
+                    var operand1 = stack.Pop(out bool popResult1);
+                    var operand2 = stack.Pop(out bool popResult2);
 
                     if (!popResult1 || !popResult2)
                     {
@@ -69,7 +69,7 @@ namespace StackCalculator
                 }
             }
 
-            int value = stack.Pop(out bool popResult);
+            var value = stack.Pop(out bool popResult);
 
             if (!popResult || !stack.IsEmpty)
             {

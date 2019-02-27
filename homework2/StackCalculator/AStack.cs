@@ -26,7 +26,8 @@ namespace StackCalculator
 
             if (isSuccessful)
             {
-                elements[--pushPosition] = 0;
+                --pushPosition;
+                elements[pushPosition] = 0;
             }
 
             return result;
