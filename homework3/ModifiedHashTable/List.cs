@@ -116,6 +116,8 @@ namespace SinglyLinkedList
                 {
                     return i;
                 }
+
+                temp = temp.Next;
             }
 
             return -1;

@@ -39,7 +39,7 @@ namespace ModifiedHashTable
             }
 
             Size = 0;
-            Array.Resize<List>(ref buckets, buckets.Length * 2);
+            Array.Resize(ref buckets, buckets.Length * 2);
 
             for (var i = buckets.Length / 2; i < buckets.Length; ++i)
             {
