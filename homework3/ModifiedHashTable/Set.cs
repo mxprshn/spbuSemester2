@@ -3,15 +3,16 @@ using SinglyLinkedList;
 
 namespace ModifiedHashTable
 {
-    class Set : ISet
+    public class Set : ISet
     {
         private const int StartSize = 5;
         private List[] buckets;
         public int Size { get; private set; }
         private IHashFunction hashFunction;
         
-        public Set()
+        public Set(IHashFunction hashFunction)
         {
+            this.hashFunction = hashFunction;
             buckets = new List[StartSize];
 
             for (var i = 0; i < buckets.Length; ++i)
@@ -20,9 +21,7 @@ namespace ModifiedHashTable
             }
         }
 
-        private int Hash(int value) => Math.Abs(value) % buckets.Length;
-
-        private float LoadFactor() => (float)Size / buckets.Length;
+        private float LoadFactor => (float)Size / buckets.Length;
 
         private void Expand()
         {
@@ -39,6 +38,7 @@ namespace ModifiedHashTable
                 }
             }
 
+            Size = 0;
             Array.Resize<List>(ref buckets, buckets.Length * 2);
 
             for (var i = buckets.Length / 2; i < buckets.Length; ++i)
@@ -59,33 +59,33 @@ namespace ModifiedHashTable
                 return false;
             }
 
-            if (LoadFactor() > 1.0)
+            if (LoadFactor > 1.0)
             {
                 Expand();
             }
 
-            buckets[Hash(value)].InsertFirst(value);
+            buckets[hashFunction.Hash(value) % (ulong)buckets.Length].InsertFirst(value);
             ++Size;
             return true;
         }
 
-        public bool Remove(int value)
+        public bool Remove(string value)
         {
-            int targetPosition = buckets[Hash(value)].FindPosition(value);
+            int targetPosition = buckets[hashFunction.Hash(value) % (ulong)buckets.Length].FindPosition(value);
 
             if (targetPosition < 0)
             {
                 return false;
             }
 
-            buckets[Hash(value)].Remove(targetPosition);
+            buckets[hashFunction.Hash(value) % (ulong)buckets.Length].Remove(targetPosition);
             --Size;
             return true;
         }
 
         public bool Exists(string value)
         {
-            return buckets[Hash(value)].Exists(value);
+            return buckets[hashFunction.Hash(value) % (ulong)buckets.Length].Exists(value);
         }
     }
 }

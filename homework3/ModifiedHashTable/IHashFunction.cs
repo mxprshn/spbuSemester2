@@ -1,17 +1,8 @@
 ﻿
 namespace ModifiedHashTable
 {
-    interface IHashFunction
+    public interface IHashFunction
     {
-        int Hash(string source);
+        ulong Hash(string source);
     }
-
-    class HashTest : IHashFunction
-    {
-        static int Hash(string source)
-        {
-            return string.;
-        }
-    }
-
 }

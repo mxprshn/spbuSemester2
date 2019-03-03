@@ -6,7 +6,8 @@ namespace ModifiedHashTable
     {
         static void Main(string[] args)
         {
-            var test = new Set();
+            var jenkinsHash = new JenkinsHash();
+            var test = new Set(jenkinsHash);
             UserInterface(test);
         }
 
@@ -21,63 +22,44 @@ namespace ModifiedHashTable
 
                 if (command == "1")
                 {
-                    Console.Write("Enter an integer value to add: ");
+                    Console.Write("Enter a value to add: ");
 
-                    if (int.TryParse(Console.ReadLine(), out int newValue))
+                    if (set.Add(Console.ReadLine()))
                     {
-                        if (set.Add(newValue))
-                        {
-                            Console.WriteLine("Value added.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Value already exists.");
-                        }
+                        Console.WriteLine("Value added.");
                     }
                     else
                     {
-                        Console.WriteLine("Incorrect input.");
+                        Console.WriteLine("Value already exists.");
                     }
                 }
                 else if (command == "2")
                 {
-                    Console.Write("Enter an integer value to remove: ");
+                    Console.Write("Enter a value to remove: ");
 
-                    if (int.TryParse(Console.ReadLine(), out int newValue))
+                    if (set.Remove(Console.ReadLine()))
                     {
-                        if (set.Remove(newValue))
-                        {
-                            Console.WriteLine("Value removed.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Value not found.");
-                        }
+                        Console.WriteLine("Value removed.");
                     }
                     else
                     {
-                        Console.WriteLine("Incorrect input.");
+                        Console.WriteLine("Value not found.");
                     }
+
                 }
                 else if (command == "3")
                 {
-                    Console.Write("Enter an integer value to find: ");
+                    Console.Write("Enter a value to find: ");
 
-                    if (int.TryParse(Console.ReadLine(), out int newValue))
+                    if (set.Exists(Console.ReadLine()))
                     {
-                        if (set.Exists(newValue))
-                        {
-                            Console.WriteLine("Value exists.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Value doesn't exist.");
-                        }
+                        Console.WriteLine("Value exists.");
                     }
                     else
                     {
-                        Console.WriteLine("Incorrect input.");
+                        Console.WriteLine("Value doesn't exist.");
                     }
+
                 }
             }
         }
