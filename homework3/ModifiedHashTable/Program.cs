@@ -13,7 +13,7 @@ namespace ModifiedHashTable
 
         static void UserInterface(Set set)
         {
-            Console.WriteLine("0 - Exit; 1 - Add a value; 2 - Remove a value; 3 - Check a value for existence\n");
+            Console.WriteLine("0 -- Exit; 1 - Add a value; 2 -- Remove a value; 3 -- Check a value for existence\n");
             string command = "";
 
             while (command != "0")

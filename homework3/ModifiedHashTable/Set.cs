@@ -3,11 +3,19 @@ using SinglyLinkedList;
 
 namespace ModifiedHashTable
 {
+    /// <summary>
+    /// Class representing set data structure, which contains unique string elements.
+    /// </summary>
     public class Set : ISet
     {
         private const int StartSize = 5;
         private List[] buckets;
+
+        /// <summary>
+        /// Number of elements in the set.
+        /// </summary>
         public int Size { get; private set; }
+
         private IHashFunction hashFunction;
         
         public Set(IHashFunction hashFunction)
@@ -52,6 +60,11 @@ namespace ModifiedHashTable
             }
         }
 
+        /// <summary>
+        /// Adds a new string value to the set if it doesn't already exist.
+        /// </summary>
+        /// <param name="value">A string value to add.</param>
+        /// <returns>True if the value didn't exist and was added, False if the value already exists.</returns>
         public bool Add(string value)
         {
             if (Exists(value))
@@ -69,6 +82,11 @@ namespace ModifiedHashTable
             return true;
         }
 
+        /// <summary>
+        /// Removes a string value from the set if it exists there.
+        /// </summary>
+        /// <param name="value">A string value to remove.</param>
+        /// <returns>True if the value existed and was removed, False if the value doesn't exist.</returns>
         public bool Remove(string value)
         {
             int targetPosition = buckets[hashFunction.Hash(value) % (ulong)buckets.Length].FindPosition(value);
@@ -83,6 +101,11 @@ namespace ModifiedHashTable
             return true;
         }
 
+        /// <summary>
+        /// Checks a string value for existence in the set.
+        /// </summary>
+        /// <param name="value">A string value to check for existence.</param>
+        /// <returns>True if the value exists, otherwise False.</returns>
         public bool Exists(string value)
         {
             return buckets[hashFunction.Hash(value) % (ulong)buckets.Length].Exists(value);
