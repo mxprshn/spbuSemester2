@@ -56,6 +56,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetTests.cs" />
   </ItemGroup>
@@ -67,6 +68,10 @@
       <Project>{6FB96D91-BDBD-45F8-9FF9-9A1772F55EA0}</Project>
       <Name>ModifiedHashTable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ListTestsStrings.txt" />
+    <Content Include="SetTestsStrings.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

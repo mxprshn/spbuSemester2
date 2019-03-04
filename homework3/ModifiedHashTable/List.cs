@@ -2,7 +2,7 @@
 
 namespace SinglyLinkedList
 {
-    class List : IList
+    public class List : IList
     {
         private class Node
         {
