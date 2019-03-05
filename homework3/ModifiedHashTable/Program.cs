@@ -6,14 +6,42 @@ namespace ModifiedHashTable
     {
         private static void Main(string[] args)
         {
-            var jenkinsHash = new JenkinsHash();
-            var test = new Set(jenkinsHash);
-            UserInterface(test);
+            Set testSet;
+            Console.WriteLine("Choose a hash function which will be used in set implementation:");
+            Console.WriteLine("0 -- Exit; 1 -- Rolling hash; 2 - Jenkins hash; 3 -- FNV hash");
+            string command = Console.ReadLine();
+
+            switch (command)
+            {
+                case "1":
+                    {
+                        testSet = new Set(new RollingHash());                        
+                        break;
+                    }
+                case "2":
+                    {
+                        testSet = new Set(new JenkinsHash());
+                        break;
+                    }
+                case "3":
+                    {
+                        testSet = new Set(new FNVHash());
+                        break;
+                    }
+                default:
+                    {
+                        return;
+                    }
+                    
+            }
+
+            Console.WriteLine("Set created.");
+            UserInterface(testSet);
         }
 
         private static void UserInterface(Set set)
         {
-            Console.WriteLine("0 -- Exit; 1 - Add a value; 2 -- Remove a value; 3 -- Check a value for existence\n");
+            Console.WriteLine("0 -- Exit; 1 - Add a value; 2 -- Remove a value; 3 -- Check a value for existence");
             string command = "";
 
             while (command != "0")
@@ -59,7 +87,6 @@ namespace ModifiedHashTable
                     {
                         Console.WriteLine("Value doesn't exist.");
                     }
-
                 }
             }
         }
