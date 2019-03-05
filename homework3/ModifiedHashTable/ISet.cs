@@ -1,7 +1,7 @@
 ﻿
 namespace ModifiedHashTable
 {
-    interface ISet
+    public interface ISet
     {
         int Size { get; }
         bool Add(string value);

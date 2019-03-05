@@ -4,14 +4,14 @@ namespace ModifiedHashTable
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var jenkinsHash = new JenkinsHash();
             var test = new Set(jenkinsHash);
             UserInterface(test);
         }
 
-        static void UserInterface(Set set)
+        private static void UserInterface(Set set)
         {
             Console.WriteLine("0 -- Exit; 1 - Add a value; 2 -- Remove a value; 3 -- Check a value for existence\n");
             string command = "";

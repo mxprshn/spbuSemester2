@@ -4,7 +4,7 @@ using SinglyLinkedList;
 namespace ModifiedHashTable
 {
     /// <summary>
-    /// Class representing set data structure, which contains unique string elements.
+    /// Class implementing set data structure, which contains unique string elements.
     /// </summary>
     public class Set : ISet
     {
@@ -18,6 +18,10 @@ namespace ModifiedHashTable
 
         private IHashFunction hashFunction;
         
+        /// <summary>
+        /// Creates a new Set object.
+        /// </summary>
+        /// <param name="hashFunction">Hash function which will be used in set implementation.</param>
         public Set(IHashFunction hashFunction)
         {
             this.hashFunction = hashFunction;
