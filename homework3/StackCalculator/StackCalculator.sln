@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackCalculator", "StackCalculator.csproj", "{22CA160E-2152-4989-BCBE-38454D7A5C0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StackCalculator.Tests", "..\StackCalculator.Tests\StackCalculator.Tests.csproj", "{C38382A5-874C-40B3-A9AD-D990004EDA69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{22CA160E-2152-4989-BCBE-38454D7A5C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22CA160E-2152-4989-BCBE-38454D7A5C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22CA160E-2152-4989-BCBE-38454D7A5C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C38382A5-874C-40B3-A9AD-D990004EDA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C38382A5-874C-40B3-A9AD-D990004EDA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C38382A5-874C-40B3-A9AD-D990004EDA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C38382A5-874C-40B3-A9AD-D990004EDA69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

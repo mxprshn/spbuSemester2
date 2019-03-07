@@ -2,7 +2,7 @@
 
 namespace StackCalculator
 {
-    class Calculator
+    public class Calculator
     {
         private IStack stack;
 

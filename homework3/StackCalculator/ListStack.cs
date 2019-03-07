@@ -1,7 +1,7 @@
 ﻿
 namespace StackCalculator
 {
-    class ListStack : IStack
+    public class ListStack : IStack
     {
         private class StackElement
         {

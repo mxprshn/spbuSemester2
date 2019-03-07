@@ -1,7 +1,7 @@
 ﻿
 namespace StackCalculator
 {
-    interface IStack
+    public interface IStack
     {
         bool IsEmpty { get; }
         void Push(int data);

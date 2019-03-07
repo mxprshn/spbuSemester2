@@ -2,7 +2,7 @@
 
 namespace StackCalculator
 {
-    class ArrayStack : IStack
+    public class ArrayStack : IStack
     {
         private const int StartSize = 2;
         private int[] elements = new int[StartSize];
