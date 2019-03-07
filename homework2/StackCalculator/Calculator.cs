@@ -60,12 +60,12 @@ namespace StackCalculator
                                 stack.Push(operand2 / operand1);
                                 break;
                             }
-                        default:
-                            {
-                                stack.Clear();
-                                throw new FormatException("Incorrect input");
-                            }
                     }
+                }
+                else
+                {
+                    stack.Clear();
+                    throw new FormatException("Incorrect input");
                 }
             }
 
