@@ -26,7 +26,7 @@ namespace StackCalculator
 
                 try
                 {
-                    Console.Write("Enter an expression to calculate (divide operands with spaces): ");
+                    Console.Write("Enter a posfix expression (integer numbers, '+', '-', '*', '/', divided by spaces): ");
                     var expression = Console.ReadLine();
 
                     Console.WriteLine($"Calculator using stack using list says: {LCalculator.Evaluate(expression)}");
