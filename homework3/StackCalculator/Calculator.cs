@@ -10,14 +10,21 @@ namespace StackCalculator
         private IStack stack;
 
         /// <summary>
-        /// 
+        /// Creates a new Calculator.
         /// </summary>
-        /// <param name="stack"></param>
+        /// <param name="stack">Stack used in Calculator implementation.</param>
         public Calculator(IStack stack)
         {
             this.stack = stack;
         }
 
+        /// <summary>
+        /// Evaluates an integer expression in postfix notation.
+        /// </summary>
+        /// <param name="expression">Expression in postfix notation to evaluate.</param>
+        /// <returns>Value of the expression.</returns>
+        /// <exception cref="FormatException">Thrown in case of incorrect input.</exception>
+        /// <exception cref="DivideByZeroException">Thrown if the expression includes dividing by zero.</exception>
         public int Evaluate(string expression)
         {
             string[] operands = expression.Split(' ');
