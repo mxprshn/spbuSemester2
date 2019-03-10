@@ -2,7 +2,7 @@
 namespace StackCalculator
 {
     /// <summary>
-    /// Interface of LIFO data structure of integer values.
+    /// Interface of LIFO data structure with integer values.
     /// </summary>
     public interface IStack
     {

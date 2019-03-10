@@ -3,7 +3,7 @@
 namespace StackCalculator
 {
     /// <summary>
-    /// Class with implementation of LIFO data structure of integer values.
+    /// Class with implementation of LIFO data structure with integer values.
     /// </summary>
     public class ArrayStack : IStack
     {
