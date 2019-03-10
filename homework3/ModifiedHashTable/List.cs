@@ -27,7 +27,7 @@ namespace SinglyLinkedList
         public int Length { get; private set; }
 
         /// <summary>
-        /// 
+        /// Existence of elements in the list.
         /// </summary>
         public bool IsEmpty => head == null;
 
