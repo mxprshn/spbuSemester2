@@ -13,7 +13,7 @@ namespace StackCalculator
             var ACalculator = new Calculator(ACalculationStack);
 
             Console.WriteLine("0 -- Exit; 1 -- No, let's calculate something");
-            string command = "";
+            var command = "";
 
             while (command != "0")
             {
