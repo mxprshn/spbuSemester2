@@ -2,10 +2,17 @@
 
 namespace StackCalculator
 {
+    /// <summary>
+    /// Class evaluating an integer expression in postfix notation.
+    /// </summary>
     public class Calculator
     {
         private IStack stack;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stack"></param>
         public Calculator(IStack stack)
         {
             this.stack = stack;
