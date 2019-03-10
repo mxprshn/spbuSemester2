@@ -133,6 +133,11 @@ namespace SinglyLinkedList
             set => FindNode(position).Value = value;
         }
 
+        /// <summary>
+        /// Checks a value for existence in the list.
+        /// </summary>
+        /// <param name="value">A string value to find.</param>
+        /// <returns>True if the value found, False otherwise.</returns>
         public bool Exists(string value)
         {
             var temp = head;
@@ -151,7 +156,7 @@ namespace SinglyLinkedList
         /// <summary>
         /// Finds the position of an element by its value.
         /// </summary>
-        /// <param name="value">Value of the element to find.</param>
+        /// <param name="value">Value of the element to check for existence.</param>
         /// <returns>Index of the element's position if it was found, -1 otherwise.</returns>
         public int FindPosition(string value)
         {
