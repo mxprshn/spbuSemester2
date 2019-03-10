@@ -167,5 +167,165 @@ namespace StackCalculator.Tests
             var result = testArrayCalculator.Evaluate(testExpression);
             Assert.AreEqual(0, result);
         }
+
+        [TestMethod()]
+        public void NoOperationsListEvaluateTest()
+        {
+            string testExpression = "31415926";
+            var result = testListCalculator.Evaluate(testExpression);
+            Assert.AreEqual(31415926, result);
+        }
+
+        [TestMethod()]
+        public void NoOperationsArrayEvaluateTest()
+        {
+            string testExpression = "31415926";
+            var result = testArrayCalculator.Evaluate(testExpression);
+            Assert.AreEqual(31415926, result);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void InfixNotationListEvaluateTest()
+        {
+            string testExpression = "100 * 100 + 100 - 100 / 100";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void InfixNotationArrayEvaluateTest()
+        {
+            string testExpression = "100 * 100 + 100 - 100 / 100";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void FloatNumbersListEvaluateTest()
+        {
+            string testExpression = "3.1415 2.7182 +";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void FloatNumbersArrayEvaluateTest()
+        {
+            string testExpression = "3.1415 2.7182 +";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void ForgotASpaceListEvaluateTest()
+        {
+            string testExpression = "100 200-";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void ForgotASpaceArrayEvaluateTest()
+        {
+            string testExpression = "100 200-";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void WrongCharactersListEvaluateTest()
+        {
+            string testExpression = "divide five by two PLEASE";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void WrongCharactersArrayEvaluateTest()
+        {
+            string testExpression = "divide five by two PLEASE";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void WrongOperationListEvaluateTest()
+        {
+            string testExpression = "5 5 =";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void WrongOperationArrayEvaluateTest()
+        {
+            string testExpression = "5 5 =";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void CalculatingLettersListEvaluateTest()
+        {
+            string testExpression = "a b *";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void CalculatingLettersArrayEvaluateTest()
+        {
+            string testExpression = "a b *";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void TooLongNumbersListEvaluateTest()
+        {
+            string testExpression = "1000000000000 2000000000000 *";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void TooLongNumbersArrayEvaluateTest()
+        {
+            string testExpression = "1000000000000 2000000000000 *";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void DividingByZeroListEvaluateTest()
+        {
+            string testExpression = "5 0 /";
+            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void DividingByZeroArrayEvaluateTest()
+        {
+            string testExpression = "5 0 /";
+            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Fail();
+        }
     }
 }

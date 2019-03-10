@@ -56,7 +56,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ArrayStackTests.cs" />
     <Compile Include="CalculatorTests.cs" />
+    <Compile Include="ListStackTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
