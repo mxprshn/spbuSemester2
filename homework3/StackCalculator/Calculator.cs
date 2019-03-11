@@ -27,15 +27,15 @@ namespace StackCalculator
         /// <exception cref="DivideByZeroException">Thrown if the expression includes dividing by zero.</exception>
         public int Evaluate(string expression)
         {
-            string[] operands = expression.Split(' ');
+            string[] operandsAndOperations = expression.Split(' ');
 
-            foreach (string operand in operands)
+            foreach (string operandOrOperation in operandsAndOperations)
             {
-                if (int.TryParse(operand, out int number))
+                if (int.TryParse(operandOrOperation, out int operand))
                 {
-                    stack.Push(number);
+                    stack.Push(operand);
                 }
-                else if (char.TryParse(operand, out char operation))
+                else if (char.TryParse(operandOrOperation, out char operation))
                 {
                     var operand1 = stack.Pop(out bool popResult1);
                     var operand2 = stack.Pop(out bool popResult2);
