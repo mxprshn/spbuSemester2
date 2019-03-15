@@ -38,9 +38,15 @@ namespace StackCalculator
                     Console.WriteLine(exception.Message);
                 }
 
-                catch(DivideByZeroException exception)
+                catch(DivideByZeroException)
                 {
-                    Console.WriteLine(exception.Message);
+                    Console.WriteLine("Dividing by zero.");
+                }
+
+                finally
+                {
+                    LCalculationStack.Clear();
+                    ACalculationStack.Clear();
                 }
             }
         }

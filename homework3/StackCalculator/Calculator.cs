@@ -42,7 +42,6 @@ namespace StackCalculator
 
                     if (!popResult1 || !popResult2)
                     {
-                        stack.Clear();
                         throw new FormatException("Incorrect input");
                     }
 
@@ -65,12 +64,6 @@ namespace StackCalculator
                             }
                         case '/':
                             {
-                                if (operand1 == 0)
-                                {
-                                    stack.Clear();
-                                    throw new DivideByZeroException("Division by zero");
-                                }
-
                                 stack.Push(operand2 / operand1);
                                 break;
                             }
@@ -78,7 +71,6 @@ namespace StackCalculator
                 }
                 else
                 {
-                    stack.Clear();
                     throw new FormatException("Incorrect input");
                 }
             }
@@ -87,7 +79,6 @@ namespace StackCalculator
 
             if (!popResult || !stack.IsEmpty)
             {
-                stack.Clear();
                 throw new FormatException("Incorrect input");
             }
 
