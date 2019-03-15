@@ -33,12 +33,12 @@ namespace StackCalculator
                     Console.WriteLine($"Calculator using stack using array says: {ACalculator.Evaluate(expression)}");
                 }
 
-                catch(FormatException exception)
+                catch (FormatException exception)
                 {
                     Console.WriteLine(exception.Message);
                 }
 
-                catch(DivideByZeroException exception)
+                catch (DivideByZeroException exception)
                 {
                     Console.WriteLine(exception.Message);
                 }
