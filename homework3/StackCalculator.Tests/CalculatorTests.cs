@@ -190,7 +190,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "100 * 100 + 100 - 100 / 100";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -199,7 +198,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "100 * 100 + 100 - 100 / 100";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -208,7 +206,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "3.1415 2.7182 +";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -217,7 +214,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "3.1415 2.7182 +";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -226,7 +222,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "100 200-";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -235,7 +230,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "100 200-";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -244,7 +238,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "divide five by two PLEASE";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -253,7 +246,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "divide five by two PLEASE";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -262,7 +254,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "5 5 =";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -271,7 +262,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "5 5 =";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -280,7 +270,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "a b *";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -289,7 +278,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "a b *";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -298,7 +286,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "1000000000000 2000000000000 *";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -307,7 +294,22 @@ namespace StackCalculator.Tests
         {
             string testExpression = "1000000000000 2000000000000 *";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void EmptyInputArrayEvaluateTest()
+        {
+            string testExpression = "";
+            _ = testArrayCalculator.Evaluate(testExpression);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(FormatException))]
+        public void EmptyInputListEvaluateTest()
+        {
+            string testExpression = "";
+            _ = testListCalculator.Evaluate(testExpression);
         }
 
         [TestMethod()]
@@ -316,7 +318,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "5 0 /";
             _ = testListCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
 
         [TestMethod()]
@@ -325,7 +326,6 @@ namespace StackCalculator.Tests
         {
             string testExpression = "5 0 /";
             _ = testArrayCalculator.Evaluate(testExpression);
-            Assert.Fail();
         }
     }
 }
