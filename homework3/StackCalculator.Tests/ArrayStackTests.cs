@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace StackCalculator.Tests
 {
@@ -47,9 +48,8 @@ namespace StackCalculator.Tests
         {
             var value = 777;
             testStack.Push(value);
-            var poppedValue = testStack.Pop(out bool result);
+            var poppedValue = testStack.Pop();
             Assert.AreEqual(poppedValue, value);
-            Assert.IsTrue(result);
             Assert.IsTrue(testStack.IsEmpty);
         }
 
@@ -63,21 +63,18 @@ namespace StackCalculator.Tests
 
             for (var i = 100; i >= 0; --i)
             {
-                var poppedValue = testStack.Pop(out bool result);
+                var poppedValue = testStack.Pop();
                 Assert.AreEqual(poppedValue, i);
-                Assert.IsTrue(result);
             }
 
             Assert.IsTrue(testStack.IsEmpty);
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void PopFromEmptyTest()
         {
-            var poppedValue = testStack.Pop(out bool result);
-            Assert.AreEqual(poppedValue, -1);
-            Assert.IsFalse(result);
-            Assert.IsTrue(testStack.IsEmpty);
+            _ = testStack.Pop();
         }
 
         [TestMethod()]
@@ -85,19 +82,16 @@ namespace StackCalculator.Tests
         {
             var value = 777;
             testStack.Push(value);
-            var peekedValue = testStack.Peek(out bool result);
+            var peekedValue = testStack.Peek();
             Assert.AreEqual(peekedValue, value);
-            Assert.IsTrue(result);
             Assert.IsFalse(testStack.IsEmpty);
         }
 
         [TestMethod()]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void PeekFromEmptyTest()
         {
-            var peekedValue = testStack.Peek(out bool result);
-            Assert.AreEqual(peekedValue, -1);
-            Assert.IsFalse(result);
-            Assert.IsTrue(testStack.IsEmpty);
+            _ = testStack.Peek();
         }
 
         [TestMethod()]

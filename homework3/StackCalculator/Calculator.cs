@@ -23,8 +23,10 @@ namespace StackCalculator
         /// </summary>
         /// <param name="expression">Expression in postfix notation to evaluate.</param>
         /// <returns>Value of the expression.</returns>
-        /// <exception cref="FormatException">Thrown in case of incorrect input.</exception>
-        /// <exception cref="DivideByZeroException">Thrown if the expression includes dividing by zero.</exception>
+        /// <exception cref="FormatException">Thrown in case of incorrect input. The calculating stack
+        /// in this case may not remain empty.</exception>
+        /// <exception cref="DivideByZeroException">Thrown if the expression includes dividing by zero. The calculating stack
+        /// in this case may not remain empty.</exception>
         public int Evaluate(string expression)
         {
             string[] operandsAndOperations = expression.Split(' ');
@@ -37,10 +39,23 @@ namespace StackCalculator
                 }
                 else if (char.TryParse(operandOrOperation, out char operation))
                 {
-                    var operand1 = stack.Pop(out bool popResult1);
-                    var operand2 = stack.Pop(out bool popResult2);
+                    int operand1 = 0;
+                    int operand2 = 0;
 
-                    if (!popResult1 || !popResult2)
+                    if (!stack.IsEmpty)
+                    {
+                        operand1 = stack.Pop();
+                    }
+                    else
+                    {
+                        throw new FormatException("Incorrect input");
+                    }
+
+                    if (!stack.IsEmpty)
+                    {
+                        operand2 = stack.Pop();
+                    }
+                    else
                     {
                         throw new FormatException("Incorrect input");
                     }
@@ -75,9 +90,18 @@ namespace StackCalculator
                 }
             }
 
-            var value = stack.Pop(out bool popResult);
+            int value = 0;
 
-            if (!popResult || !stack.IsEmpty)
+            if (!stack.IsEmpty)
+            {
+                value = stack.Pop();
+            }
+            else
+            {
+                throw new FormatException("Incorrect input");
+            }
+
+            if (!stack.IsEmpty)
             {
                 throw new FormatException("Incorrect input");
             }

@@ -20,16 +20,14 @@ namespace StackCalculator
         /// <summary>
         /// Returns and removes the top element of the stack.
         /// </summary>
-        /// <param name="isSuccessful">True if the stack had at least one element, False if it is empty.</param>
-        /// <returns>Value of the top element if it existed.</returns>
-        int Pop(out bool isSuccessful);
+        /// <returns>Value of the top element.</returns>
+        int Pop();
 
         /// <summary>
         /// Returns the top element of the stack.
         /// </summary>
-        /// <param name="isSuccessful">True if the stack has at least one element, False if it is empty.</param>
-        /// <returns>Value of the top element if it existed.</returns>
-        int Peek(out bool isSuccessful);
+        /// <returns>Value of the top element.</returns>
+        int Peek();
 
         /// <summary>
         /// Removes all elements from the stack.
