@@ -6,9 +6,16 @@ namespace ParsingTree
     {
         public Node Root { get; }
 
-        public ParseTree()
+        public void Print()
         {
-            
+            Root.Print();
+        }
+
+        public int Value => Root.Value;
+
+        public ParseTree(Node newRoot)
+        {
+            Root = newRoot;
         }
     }
 }

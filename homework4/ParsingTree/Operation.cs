@@ -4,8 +4,8 @@ namespace ParsingTree
 {
     public abstract class Operation : Node
     {
-        public Node Left { get; set; }
-        public Node Right { get; set; }
+        //public Node Left { get; set; }
+        //public Node Right { get; set; }
         public abstract char OperationSymbol { get; }
 
         public override void Print()
