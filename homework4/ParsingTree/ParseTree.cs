@@ -4,11 +4,11 @@ namespace ParsingTree
 {
     public class ParseTree
     {
-        private Node root;
+        public Node Root { get; }
 
         public ParseTree()
         {
-
+            
         }
     }
 }
