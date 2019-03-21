@@ -11,6 +11,8 @@ namespace ParsingTree
     {
         static void Main(string[] args)
         {
+            Console.WriteLine($"{TreeCalculator.CalculateTree("..\\..\\Input.txt")}");
+            Console.ReadKey();
         }
     }
 }
