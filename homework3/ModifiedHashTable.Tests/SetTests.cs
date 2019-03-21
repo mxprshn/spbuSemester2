@@ -9,7 +9,6 @@ namespace ModifiedHashTable.Tests
         private Set testRollingHashSet;
         private Set testJenkinsHashSet;
         private Set testFNVHashSet;
-        private FileStream testFile;
         private StreamReader testFileReader;
 
         [TestInitialize]
@@ -18,8 +17,7 @@ namespace ModifiedHashTable.Tests
             testRollingHashSet = new Set(new RollingHash());
             testJenkinsHashSet = new Set(new JenkinsHash());
             testFNVHashSet = new Set(new FNVHash());
-            testFile = new FileStream("..\\..\\SetTestsStrings.txt", FileMode.Open, FileAccess.Read);
-            testFileReader = new StreamReader(testFile);
+            testFileReader = new StreamReader("..\\..\\SetTestsStrings.txt");
         }
 
         [TestCleanup]

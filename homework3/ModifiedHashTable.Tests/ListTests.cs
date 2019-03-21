@@ -8,15 +8,13 @@ namespace SinglyLinkedList.Tests
     public class ListTests
     {
         private List testList;
-        private FileStream testFile;
         private StreamReader testFileReader;
 
         [TestInitialize]
         public void Initialize()
         {
             testList = new List();
-            testFile = new FileStream("..\\..\\ListTestsStrings.txt", FileMode.Open, FileAccess.Read);
-            testFileReader = new StreamReader(testFile);
+            testFileReader = new StreamReader("..\\..\\ListTestsStrings.txt");
         }
 
         [TestCleanup]
