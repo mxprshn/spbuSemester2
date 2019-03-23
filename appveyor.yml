@@ -2,13 +2,14 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-  - solution_name: homework4/ParsingTree/ParsingTree.sln
+  - solution_path: homework4/ParsingTree/ParsingTree.sln
+  - test_path: homework4/ParsingTree.Tests/bin/Debug/ParsingTree.Tests.dll
 
 before_build:
- - nuget restore %solution_name%
+ - nuget restore %solution_path%
 
 build_script:
-  - msbuild %solution_name%
+  - msbuild %solution_path%
 
 test_script:
-  - vstest.console /logger:Appveyor %solution_name%
+  - vstest.console /logger:Appveyor %test_path%
