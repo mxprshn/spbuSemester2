@@ -2,11 +2,6 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-  - solution_path: homework1\FibonacciFactorial.sln
-  - solution_path: homework1\matrix_sort.sln
-  - solution_path: homework1\QuickSort.sln
-  - solution_path: homework2\HashTable\HashTable.sln
-  - solution_path: homework2\SinglyLinkedList\SinglyLinkedList.sln
   - solution_path: homework4\ParsingTree\ParsingTree.sln  
 
 before_build:
