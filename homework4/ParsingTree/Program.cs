@@ -17,8 +17,6 @@ namespace ParsingTree
             Console.Write("Parsing tree from the file: ");
             var value = TreeCalculator.Calculate(textTree, true);
             Console.WriteLine($"Value of the tree: {value}");
-
-            _ = Console.ReadKey();
         }
     }
 }
