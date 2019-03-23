@@ -12,11 +12,12 @@ namespace ParsingTree
         private Node Root;
 
         /// <summary>
-        /// Prints the tree in the following format: (<operation> <operand/subtree> <operand/subtree>).
+        /// Creates a new parse tree by the root node.
         /// </summary>
-        public void Print()
+        /// <param name="newRoot">The root of the new tree.</param>
+        public ParseTree(Node newRoot)
         {
-            Root.Print();
+            Root = newRoot;
         }
 
         /// <summary>
@@ -25,12 +26,11 @@ namespace ParsingTree
         public int Value => Root.Value;
 
         /// <summary>
-        /// Creates a new parse tree by the root node.
+        /// Prints the tree in the following format: (<operation> <operand/subtree> <operand/subtree>).
         /// </summary>
-        /// <param name="newRoot">The root of the new tree.</param>
-        public ParseTree(Node newRoot)
+        public void Print()
         {
-            Root = newRoot;
+            Root.Print();
         }
     }
 }

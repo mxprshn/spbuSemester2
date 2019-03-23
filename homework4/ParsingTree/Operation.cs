@@ -13,7 +13,7 @@ namespace ParsingTree
         public abstract char OperationSymbol { get; }
 
         /// <summary>
-        /// Prints the node in the following format: (<OperationSymbol> <operand> <operand>).
+        /// Prints the node in the following format: (<OperationSymbol> <Left> <Right>).
         /// </summary>
         public override void Print()
         {
