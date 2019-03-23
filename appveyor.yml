@@ -1,9 +1,5 @@
 image: Visual Studio 2017
 
-branches:
-  only:
-  - ParsingTree
-
 environment:
   matrix:
   - solution_name: homework4/ParsingTree/ParsingTree.sln
