@@ -4,7 +4,7 @@ namespace ParsingTree
 {
     public class ParseTree
     {
-        public Node Root { get; }
+        private Node Root;
 
         public void Print()
         {

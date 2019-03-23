@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 
 namespace ParsingTree
 {
@@ -11,7 +6,7 @@ namespace ParsingTree
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"{TreeCalculator.CalculateTree("..\\..\\Input.txt")}");
+            Console.WriteLine($"{TreeCalculator.Calculate("(/ 1 0)", true)}");
             Console.ReadKey();
         }
     }

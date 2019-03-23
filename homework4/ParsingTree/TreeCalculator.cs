@@ -6,18 +6,16 @@ namespace ParsingTree
 {
     public static class TreeCalculator
     {
-        public static int CalculateTree(string fileName)
+        public static int Calculate(string textTree, bool printNeeded = false)
         {
-            string textTree;
+            ParseTree result = ParseToTree(textTree);
 
-            using (var treeFileReader = new StreamReader(fileName))
+            if (printNeeded)
             {
-                textTree = treeFileReader.ReadLine();
+                result.Print();
+                Console.WriteLine();
             }
 
-            ParseTree result = ParseToTree(textTree);
-            result.Print();
-            Console.WriteLine();
             return result.Value;
         }
 
@@ -46,11 +44,16 @@ namespace ParsingTree
                             newNode = new Multiplication();
                             break;
                         }
-                    default:
+                    case "/":
                         {
                             newNode = new Division();
                             break;
                         }
+                    default:
+                        {
+                            throw new FormatException();
+                        }
+
                 }
 
                 ++position;
