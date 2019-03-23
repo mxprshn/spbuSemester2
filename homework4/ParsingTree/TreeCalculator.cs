@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace ParsingTree
@@ -8,7 +7,7 @@ namespace ParsingTree
     {
         public static int Calculate(string textTree, bool printNeeded = false)
         {
-            ParseTree result = ParseToTree(textTree);
+            var result = ParseToTree(textTree);
 
             if (printNeeded)
             {
@@ -22,6 +21,11 @@ namespace ParsingTree
         private static Node ParseNode(string[] tokens, ref int position)
         {
             Node newNode;
+
+            if (position >= tokens.Length)
+            {
+                throw new FormatException();
+            }
 
             if (tokens[position] == "(")
             {
@@ -72,8 +76,8 @@ namespace ParsingTree
 
         private static ParseTree ParseToTree(string textTree)
         {
-            MatchCollection tokenMatches = Regex.Matches(textTree, @"-*\d+|[()*/+-]");
-            string[] tokens = new string[tokenMatches.Count];
+            var tokenMatches = Regex.Matches(textTree, @"-*\d+|[()*/+-]");
+            var tokens = new string[tokenMatches.Count];
 
             for (var i = 0; i < tokens.Length; ++i)
             {
@@ -81,7 +85,14 @@ namespace ParsingTree
             }
 
             int position = 0;
-            return new ParseTree(ParseNode(tokens, ref position));
+            var createdTree = new ParseTree(ParseNode(tokens, ref position));
+
+            if ((position != tokens.Length - 1))
+            {
+                throw new FormatException();
+            }
+
+            return createdTree;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace ParsingTree
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"{TreeCalculator.Calculate("(/ 1 0)", true)}");
+            Console.WriteLine($"{TreeCalculator.Calculate("77", true)}");
             Console.ReadKey();
         }
     }
