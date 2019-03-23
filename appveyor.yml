@@ -2,13 +2,15 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-  - solution_name: homework4/ParsingTree/ParsingTree.sln
+  - solution_path: homework1\FibonacciFactorial.sln
+  - solution_path: homework1\matrix_sort.sln
+  - solution_path: homework1\QuickSort.sln
+  - solution_path: homework2\HashTable\HashTable.sln
+  - solution_path: homework2\SinglyLinkedList\SinglyLinkedList.sln
+
 
 before_build:
- - nuget restore %solution_name%
+ - nuget restore %solution_path%
 
 build_script:
-  - msbuild %solution_name%
-
-test_script:
-  - vstest.console /logger:Appveyor %solution_name%
+  - msbuild %solution_path%
