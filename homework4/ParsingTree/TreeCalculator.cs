@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace ParsingTree
 {
@@ -32,20 +33,20 @@ namespace ParsingTree
             return result.Value;
         }
 
-        private static Node ParseNode(string[] tokens, ref int position)
+        /// <summary>
+        /// Generates a new node for the parse tree.
+        /// </summary>
+        /// <param name="tokens">Queue of operands, operations and parentheses.</param>
+        /// <returns>Generated node.</returns>
+        private static Node ParseNode(Queue<string> tokens)
         {
             Node newNode;
 
-            if (position >= tokens.Length)
+            if (tokens.Peek() == "(")
             {
-                throw new FormatException();
-            }
+                tokens.Dequeue();
 
-            if (tokens[position] == "(")
-            {
-                ++position;
-
-                switch (tokens[position])
+                switch (tokens.Peek())
                 {
                     case "+":
                         {
@@ -74,39 +75,52 @@ namespace ParsingTree
 
                 }
 
-                ++position;
-                newNode.Left = ParseNode(tokens, ref position);
-                ++position;
-                newNode.Right = ParseNode(tokens, ref position);
-                ++position;
+                tokens.Dequeue();
+                newNode.Left = ParseNode(tokens);
+                newNode.Right = ParseNode(tokens);
+                tokens.Dequeue();
             }
             else
             {
-                newNode = new Operand(int.Parse(tokens[position]));
+                newNode = new Operand(int.Parse(tokens.Peek()));
+                tokens.Dequeue();
             }
 
             return newNode;
         }
 
+        /// <summary>
+        /// Generates the parse tree of arithmetical expression by its text representation.
+        /// </summary>
+        /// <param name="textTree">Text representation of the tree.</param>
+        /// <returns>Generated tree.</returns>
+        /// <exception cref="FormatException">Thrown in case of incorrect text tree string.</exception>
         private static ParseTree ParseToTree(string textTree)
         {
             var tokenMatches = Regex.Matches(textTree, @"-*\d+|[()*/+-]");
-            var tokens = new string[tokenMatches.Count];
+            var tokens = new Queue<string>();
+            ParseTree generatedTree;
 
-            for (var i = 0; i < tokens.Length; ++i)
+            foreach (Match token in tokenMatches)
             {
-                tokens[i] = tokenMatches[i].Value;
+                tokens.Enqueue(token.Value);
             }
 
-            int position = 0;
-            var createdTree = new ParseTree(ParseNode(tokens, ref position));
-
-            if ((position != tokens.Length - 1))
+            try
+            {
+                generatedTree = new ParseTree(ParseNode(tokens));
+            }
+            catch (InvalidOperationException)
             {
                 throw new FormatException();
             }
 
-            return createdTree;
+            if (tokens.Count != 0)
+            {
+                throw new FormatException();
+            }
+
+            return generatedTree;
         }
     }
 }
