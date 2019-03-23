@@ -9,6 +9,3 @@ before_build:
 
 build_script:
   - msbuild %solution_path%
-
-test_script:
-  - vstest.console /logger:Appveyor **\*.Tests.dll
