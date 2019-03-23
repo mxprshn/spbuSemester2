@@ -3,8 +3,22 @@ using System.Text.RegularExpressions;
 
 namespace ParsingTree
 {
+    /// <summary>
+    /// Class for calculating the expression value by its parsing tree. 
+    /// </summary>
     public static class TreeCalculator
     {
+        /// <summary>
+        /// Calculates the value of expression by its parsing tree given as a string.
+        /// </summary>
+        /// <param name="textTree">Expression parsing tree as a string of the following 
+        /// format: (<operator> <operand/subtree> <operand/subtree>).</param>
+        /// <param name="printNeeded">If 'true' the tree is printed to console, 
+        /// by default is 'false'.</param>
+        /// <returns>Value of the expression.</returns>
+        /// <exception cref="FormatException">Thrown in case of incorrect input.</exception>
+        /// <exception cref="DivideByZeroException">Thrown if the expression includes
+        /// dividing by zero.</exception>
         public static int Calculate(string textTree, bool printNeeded = false)
         {
             var result = ParseToTree(textTree);

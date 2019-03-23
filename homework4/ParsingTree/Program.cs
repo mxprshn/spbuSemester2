@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ParsingTree
 {
@@ -6,8 +7,18 @@ namespace ParsingTree
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"{TreeCalculator.Calculate("77", true)}");
-            Console.ReadKey();
+            string textTree;
+
+            using (var treeFileReader = new StreamReader("..\\..\\Input.txt"))
+            {
+                textTree = treeFileReader.ReadLine();
+            }
+
+            Console.Write("Parsing tree from the file: ");
+            var value = TreeCalculator.Calculate(textTree, true);
+            Console.WriteLine($"Value of the tree: {value}");
+
+            _ = Console.ReadKey();
         }
     }
 }
