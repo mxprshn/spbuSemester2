@@ -2,8 +2,7 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-  - solution_path: homework4/ParsingTree/ParsingTree.sln
-  - test_path: homework4/ParsingTree.Tests/bin/Debug/ParsingTree.Tests.dll
+  - solution_path: homework4\ParsingTree\ParsingTree.sln  
 
 before_build:
  - nuget restore %solution_path%
@@ -12,4 +11,4 @@ build_script:
   - msbuild %solution_path%
 
 test_script:
-  - vstest.console /logger:Appveyor %test_path%
+  - vstest.console /logger:Appveyor *.Tests.dll
