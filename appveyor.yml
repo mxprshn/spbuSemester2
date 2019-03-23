@@ -11,4 +11,4 @@ build_script:
   - msbuild %solution_path%
 
 test_script:
-  - vstest.console /logger:Appveyor *.Tests.dll
+  - vstest.console /logger:Appveyor **\*.Tests.dll
