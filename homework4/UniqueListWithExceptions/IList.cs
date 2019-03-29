@@ -17,7 +17,7 @@ namespace UniqueListWithExceptions
         bool IsEmpty { get; }
 
         /// <summary>
-        /// Inserts a new element in the beginning of the list.
+        /// Inserts a new element at the beginning of the list.
         /// </summary>
         /// <param name="newValue">A string value to insert.</param>
         void InsertFirst(string newValue);

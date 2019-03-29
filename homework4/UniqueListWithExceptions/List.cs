@@ -35,12 +35,12 @@ namespace UniqueListWithExceptions
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty");
+                throw new InvalidOperationException("The list was empty.");
             }
 
             if (position < 0 || position >= Length)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position");
+                throw new ArgumentOutOfRangeException("Incorrect index of position.");
             }
 
             var temp = head;
@@ -54,7 +54,7 @@ namespace UniqueListWithExceptions
         }
 
         /// <summary>
-        /// Inserts a new element in the beginning of the list.
+        /// Inserts a new element at the beginning of the list.
         /// </summary>
         /// <param name="newValue">A string value to insert.</param>
         public virtual void InsertFirst(string newValue)
@@ -86,7 +86,7 @@ namespace UniqueListWithExceptions
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty");
+                throw new InvalidOperationException("The list was empty.");
             }
 
             head = head.Next;
@@ -110,7 +110,7 @@ namespace UniqueListWithExceptions
 
             if (position == Length)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position");
+                throw new ArgumentOutOfRangeException("Incorrect index of position.");
             }
 
             var previousNode = FindNode(position - 1);
@@ -128,7 +128,7 @@ namespace UniqueListWithExceptions
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty");
+                throw new InvalidOperationException("The list was empty.");
             }
 
             if (head.Value == value)
@@ -182,12 +182,14 @@ namespace UniqueListWithExceptions
         {
             var temp = head;
 
-            for (var i = 0; i < Length; ++i)
+            while (temp != null)
             {
                 if (temp.Value == value)
                 {
                     return true;
                 }
+
+                temp = temp.Next;
             }
 
             return false;
