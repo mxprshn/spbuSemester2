@@ -142,12 +142,14 @@ namespace SinglyLinkedList
         {
             var temp = head;
 
-            for (var i = 0; i < Length; ++i)
+            while (temp != null)
             {
                 if (temp.Value == value)
                 {
                     return true;
                 }
+
+                temp = temp.Next;
             }
 
             return false;
