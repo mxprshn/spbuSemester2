@@ -78,7 +78,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyListOperationException))]
         public void EmptyListInsertAfterTest()
         {
             string newString = "Hello, World!!!";
@@ -86,7 +86,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(IncorrectIndexException))]
         public void IncorrectIndexInsertAfterTest()
         {
             string newString1 = "Hello, World!!!";

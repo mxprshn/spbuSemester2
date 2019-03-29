@@ -91,14 +91,19 @@ namespace UniqueListWithExceptions
                     Console.WriteLine("This element doesn't exist.");
                 }
 
-                catch (InvalidOperationException exception)
+                catch (IncorrectIndexException)
                 {
-                    Console.WriteLine(exception.Message);
+                    Console.WriteLine("Incorrect value of index.");
                 }
 
-                catch (ArgumentOutOfRangeException exception)
+                catch (EmptyListOperationException)
                 {
-                    Console.WriteLine(exception.Message);
+                    Console.WriteLine("The list was empty.");
+                }
+
+                catch (NotExistingElementRequestException)
+                {
+                    Console.WriteLine("This element doesn't exist.");
                 }
             }
         }

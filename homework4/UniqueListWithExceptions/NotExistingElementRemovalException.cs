@@ -2,6 +2,9 @@
 
 namespace UniqueListWithExceptions
 {
+    /// <summary>
+    /// Exception thrown when not existing element of list is removed.
+    /// </summary>
     [Serializable]
     public class NotExistingElementRemovalException : InvalidOperationException
     {

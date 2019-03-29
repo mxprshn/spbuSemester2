@@ -35,12 +35,12 @@ namespace UniqueListWithExceptions
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty.");
+                throw new EmptyListOperationException();
             }
 
             if (position < 0 || position >= Length)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position.");
+                throw new IncorrectIndexException();
             }
 
             var temp = head;
@@ -68,9 +68,9 @@ namespace UniqueListWithExceptions
         /// </summary>
         /// <param name="newValue">A string value to insert.</param>
         /// <param name="previousPosition">Position of the previous element.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the parameter doesn't 
+        /// <exception cref="IncorrectIndexException">Thrown when the parameter doesn't 
         /// match with any existing position.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
         public virtual void InsertAfter(string newValue, int previousPosition)
         {
             var previousNode = FindNode(previousPosition);
@@ -81,12 +81,12 @@ namespace UniqueListWithExceptions
         /// <summary>
         /// Removes the first element of the list.
         /// </summary>
-        /// <exception cref="InvalidOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
         public void RemoveFirst()
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty.");
+                throw new EmptyListOperationException();
             }
 
             head = head.Next;
@@ -97,9 +97,9 @@ namespace UniqueListWithExceptions
         /// Removes an element of the list from particular position.
         /// </summary>
         /// <param name="position">Position of the element to remove.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the parameter doesn't 
+        /// <exception cref="IncorrectIndexException">Thrown when the parameter doesn't 
         /// match with any existing position.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
         public void Remove(int position)
         {
             if (position == 0)
@@ -110,7 +110,7 @@ namespace UniqueListWithExceptions
 
             if (position == Length)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position.");
+                throw new IncorrectIndexException();
             }
 
             var previousNode = FindNode(position - 1);
@@ -122,13 +122,13 @@ namespace UniqueListWithExceptions
         /// Removes all the elements with particular value from the list.
         /// </summary>
         /// <param name="value">Value of the element to remove.</param>
-        /// <exception cref="InvalidOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
         /// <exception cref="NotExistingElementRemovalException">Thrown when the value doesn't exist.</exception>
         public void Remove(string value)
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty.");
+                throw new EmptyListOperationException();
             }
 
             if (head.Value == value)
@@ -163,9 +163,9 @@ namespace UniqueListWithExceptions
         /// </summary>
         /// <param name="position">Position of the element to get/set.</param>
         /// <returns>A string element on </returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when the parameter doesn't 
+        /// <exception cref="IncorrectIndexException">Thrown when the parameter doesn't 
         /// match with any existing position.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
         public string this[int position]
         {
             get => FindNode(position).Value;
@@ -200,12 +200,13 @@ namespace UniqueListWithExceptions
         /// </summary>
         /// <param name="value">A string value to find.</param>
         /// <returns>Index of the element's position.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when the element doesn't exist or list is empty.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="NotExistingElementRequestException">Thrown when the value doesn't exist.</exception>
         public int FindPosition(string value)
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty.");
+                throw new EmptyListOperationException();
             }
 
             var temp = head;
@@ -220,7 +221,7 @@ namespace UniqueListWithExceptions
                 temp = temp.Next;
             }
 
-            throw new InvalidOperationException("The element doesn't exist.");
+            throw new NotExistingElementRequestException();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.IO;
 
 namespace UniqueListWithExceptions.Tests
@@ -71,7 +70,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyListOperationException))]
         public void EmptyListInsertAfterTest()
         {
             string newString = "Hello, World!!!";
@@ -79,7 +78,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(IncorrectIndexException))]
         public void IncorrectIndexInsertAfterTest()
         {
             string newString1 = "Hello, World!!!";
@@ -158,7 +157,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyListOperationException))]
         public void EmptyListRemoveFirstTest()
         {
             testList.RemoveFirst();
@@ -194,14 +193,14 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyListOperationException))]
         public void EmptyListRemoveTest()
         {
             testList.Remove(1);
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(IncorrectIndexException))]
         public void IncorrectIndexRemoveTest()
         {
             string newString1 = "Hello, World!!!";
@@ -310,7 +309,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyListOperationException))]
         public void EmptyListRemoveByValueTest()
         {
             var targetString = "Hello, world!!!";
@@ -357,7 +356,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(NotExistingElementRequestException))]
         public void NotExistingStringFindPositionTest()
         {
             string newString1 = "First string";
@@ -369,7 +368,7 @@ namespace UniqueListWithExceptions.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyListOperationException))]
         public void EmptyListFindPositionTest()
         {
             string newString = "Hello, World!!!";

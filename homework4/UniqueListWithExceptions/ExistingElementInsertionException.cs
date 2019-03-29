@@ -2,6 +2,9 @@
 
 namespace UniqueListWithExceptions
 {
+    /// <summary>
+    /// Exception thrown when an existing value is inserted to UniqueList.
+    /// </summary>
     [Serializable]
     public class ExistingElementInsertionException : InvalidOperationException
     {
