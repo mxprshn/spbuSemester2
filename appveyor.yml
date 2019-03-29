@@ -7,7 +7,7 @@ environment:
   - solution_path: homework1\QuickSort.sln
   - solution_path: homework2\HashTable\HashTable.sln
   - solution_path: homework2\SinglyLinkedList\SinglyLinkedList.sln
-
+  - solution_path: homework3\StackCalculator\StackCalculator.sln
 
 before_build:
  - nuget restore %solution_path%
