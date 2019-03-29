@@ -122,9 +122,15 @@ namespace UniqueListWithExceptions
         /// Removes all the elements with particular value from the list.
         /// </summary>
         /// <param name="value">Value of the element to remove.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the list is empty.</exception>
         /// <exception cref="NotExistingElementRemovalException">Thrown when the value doesn't exist.</exception>
         public void Remove(string value)
         {
+            if (IsEmpty)
+            {
+                throw new InvalidOperationException("The list was empty");
+            }
+
             if (head.Value == value)
             {
                 RemoveFirst();
@@ -132,18 +138,24 @@ namespace UniqueListWithExceptions
             }
 
             var current = head;
+            var wasRemoved = false;
 
             while (current.Next != null)
             {
                 if (current.Next.Value == value)
                 {
                     current.Next = current.Next.Next;
+                    --Length;
+                    wasRemoved = true;
                 }
 
                 current = current.Next;
             }
 
-            throw new NotExistingElementRemovalException();
+            if (!wasRemoved)
+            {
+                throw new NotExistingElementRemovalException();
+            }
         }
 
         /// <summary>
@@ -164,7 +176,7 @@ namespace UniqueListWithExceptions
         /// <summary>
         /// Checks a value for existence in the list.
         /// </summary>
-        /// <param name="value">A string value to find.</param>
+        /// <param name="value">Value of the element to check for existence.</param>
         /// <returns>True if the value found, False otherwise.</returns>
         public bool Exists(string value)
         {
@@ -184,11 +196,16 @@ namespace UniqueListWithExceptions
         /// <summary>
         /// Finds the position of an element by its value.
         /// </summary>
-        /// <param name="value">Value of the element to check for existence.</param>
-        /// <returns>Index of the element's position if it was found, -1 otherwise.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when the element doesn't exist.</exception>
+        /// <param name="value">A string value to find.</param>
+        /// <returns>Index of the element's position.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the element doesn't exist or list is empty.</exception>
         public int FindPosition(string value)
         {
+            if (IsEmpty)
+            {
+                throw new InvalidOperationException("The list was empty.");
+            }
+
             var temp = head;
 
             for (var i = 0; i < Length; ++i)
