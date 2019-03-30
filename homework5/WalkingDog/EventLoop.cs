@@ -41,6 +41,10 @@ namespace WalkingDog
                             DownPressed(this, EventArgs.Empty);
                             break;
                         }
+                    case ConsoleKey.Escape:
+                        {
+                            return;
+                        }
                 }
             }
         }

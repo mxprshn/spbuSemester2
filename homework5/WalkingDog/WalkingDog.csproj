@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dog.cs" />
+    <Compile Include="DogHandler.cs" />
     <Compile Include="EventLoop.cs" />
     <Compile Include="IRenderable.cs" />
     <Compile Include="Map.cs" />

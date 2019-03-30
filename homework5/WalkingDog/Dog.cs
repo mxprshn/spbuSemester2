@@ -10,11 +10,45 @@ namespace WalkingDog
     {
         public int LeftPosition { get; private set; }
         public int TopPosition { get; private set; }
+        private Map placementMap;
 
-        public Dog((int left, int top) spawnPosition)
+        public Dog(Map newMap)
         {
-            LeftPosition = spawnPosition.left;
-            TopPosition = spawnPosition.top;
+            placementMap = newMap;
+            LeftPosition = newMap.SpawnPosition.left;
+            TopPosition = newMap.SpawnPosition.top;
+        }
+
+        public void MoveLeft()
+        {
+            if (placementMap[(TopPosition, LeftPosition - 1)] == ' ')
+            {
+                --LeftPosition;
+            }
+        }
+
+        public void MoveRight()
+        {
+            if (placementMap[(TopPosition, LeftPosition + 1)] == ' ')
+            {
+                ++LeftPosition;
+            }
+        }
+
+        public void MoveUp()
+        {
+            if (placementMap[(TopPosition - 1, LeftPosition)] == ' ')
+            {
+                --TopPosition;
+            }
+        }
+
+        public void MoveDown()
+        {
+            if (placementMap[(TopPosition + 1, LeftPosition)] == ' ')
+            {
+                ++TopPosition;
+            }
         }
 
         public void Render()

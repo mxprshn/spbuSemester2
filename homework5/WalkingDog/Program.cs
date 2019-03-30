@@ -10,11 +10,9 @@ namespace WalkingDog
     {
         static void Main(string[] args)
         {
-            var myMap = new Map("..\\..\\Map.txt");
-            myMap.Render();
-            var myDog = new Dog(myMap.SpawnPosition);
-            myDog.Render();
-            Console.ReadKey();
+            var eventLoop = new EventLoop();
+            var dogHandler = new DogHandler(eventLoop);
+            eventLoop.Run();
         }
     }
 }

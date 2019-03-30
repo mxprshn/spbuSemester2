@@ -11,8 +11,21 @@ namespace WalkingDog
     {
         public int Height { get; }
         public int Width { get; }
-        public (int left, int top) SpawnPosition { get; } = (-1, 0);
+        public (int top, int left) SpawnPosition { get; } = (-1, -1);
         private char[,] filling;
+
+        public char this[(int top, int left) position]
+        {
+            get
+            {
+                if (position.top < 0 || position.top >= Height || position.left < 0 || position.top >= Width)
+                {
+                    return '*';
+                }
+
+                return filling[position.top, position.left];
+            }
+        }
 
         public Map(string filePath)
         {
@@ -33,9 +46,9 @@ namespace WalkingDog
                             currentCharacter = (char)mapReader.Read();
                         }
 
-                        if (currentCharacter == ' ' && SpawnPosition.left < 0)
+                        if (currentCharacter == ' ' && SpawnPosition.top < 0)
                         {
-                            SpawnPosition = (j, i);
+                            SpawnPosition = (i, j);
                         }
 
                         filling[i, j] = currentCharacter;
