@@ -17,39 +17,38 @@ namespace WalkingDog
             eventLoop.UpPressed += UpMovement;
             eventLoop.DownPressed += DownMovement;
 
-            Render();
-        }
-
-        private void Render()
-        {
             Console.CursorVisible = false;
+            Console.Title = "Dog Simulator 2019";
             currentMap.Render();
             walkingDog.Render();
         }
 
         private void LeftMovement(object sender, EventArgs e)
         {
+            walkingDog.Clear();
             walkingDog.MoveLeft();
-            Render();
+            walkingDog.Render();
         }
 
         private void RightMovement(object sender, EventArgs e)
         {
+            walkingDog.Clear();
             walkingDog.MoveRight();
-            Render();
+            walkingDog.Render();
         }
 
         private void UpMovement(object sender, EventArgs e)
         {
+            walkingDog.Clear();
             walkingDog.MoveUp();
-            Render();
+            walkingDog.Render();
         }
 
         private void DownMovement(object sender, EventArgs e)
         {
+            walkingDog.Clear();
             walkingDog.MoveDown();
-            Render();
+            walkingDog.Render();
         }
-
     }
 }

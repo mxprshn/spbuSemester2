@@ -48,6 +48,7 @@
     <Compile Include="EventLoop.cs" />
     <Compile Include="IRenderable.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="MapFormatException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

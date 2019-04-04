@@ -7,19 +7,18 @@ namespace WalkingDog
     {
         public int Height { get; }
         public int Width { get; }
-        public (int top, int left) SpawnPosition { get; } = (-1, -1);
         private char[,] filling;
 
-        public char this[(int top, int left) position]
+        public char this[int top, int left]
         {
             get
             {
-                if (position.top < 0 || position.top >= Height || position.left < 0 || position.top >= Width)
+                if (top < 0 || top >= Height || left < 0 || top >= Width)
                 {
                     return '*';
                 }
 
-                return filling[position.top, position.left];
+                return filling[top, left];
             }
         }
 
@@ -40,11 +39,6 @@ namespace WalkingDog
                         while (currentCharacter == '\n' || currentCharacter == '\r')
                         {
                             currentCharacter = (char)mapReader.Read();
-                        }
-
-                        if (currentCharacter == ' ' && SpawnPosition.top < 0)
-                        {
-                            SpawnPosition = (i, j);
                         }
 
                         filling[i, j] = currentCharacter;
