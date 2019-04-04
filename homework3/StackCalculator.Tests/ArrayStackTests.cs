@@ -49,7 +49,7 @@ namespace StackCalculator.Tests
             var value = 777;
             testStack.Push(value);
             var poppedValue = testStack.Pop();
-            Assert.AreEqual(poppedValue, value);
+            Assert.AreEqual(value, poppedValue);
             Assert.IsTrue(testStack.IsEmpty);
         }
 
@@ -64,7 +64,7 @@ namespace StackCalculator.Tests
             for (var i = 100; i >= 0; --i)
             {
                 var poppedValue = testStack.Pop();
-                Assert.AreEqual(poppedValue, i);
+                Assert.AreEqual(i, poppedValue);
             }
 
             Assert.IsTrue(testStack.IsEmpty);
@@ -83,7 +83,7 @@ namespace StackCalculator.Tests
             var value = 777;
             testStack.Push(value);
             var peekedValue = testStack.Peek();
-            Assert.AreEqual(peekedValue, value);
+            Assert.AreEqual(value, peekedValue);
             Assert.IsFalse(testStack.IsEmpty);
         }
 

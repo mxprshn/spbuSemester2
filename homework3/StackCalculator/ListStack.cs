@@ -30,10 +30,7 @@ namespace StackCalculator
         /// Adds a new element to the top of the stack.
         /// </summary>
         /// <param name="data">An integer value to add.</param>
-        public void Push(int data)
-        {
-            head = new StackElement(data, head);
-        }
+        public void Push(int data) => head = new StackElement(data, head);
 
         /// <summary>
         /// Returns and removes the top element of the stack.
@@ -67,10 +64,7 @@ namespace StackCalculator
         /// </summary>
         public void Clear()
         {
-            while (!IsEmpty)
-            {
-                _ = Pop();
-            }
+            head = null;
         }
     }
 }

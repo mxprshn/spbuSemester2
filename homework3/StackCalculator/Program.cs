@@ -6,11 +6,11 @@ namespace StackCalculator
     {
         static void Main(string[] args)
         {
-            var LCalculationStack = new ListStack();
-            var ACalculationStack = new ArrayStack();
+            var listCalculationStack = new ListStack();
+            var arrayCalculationStack = new ArrayStack();
 
-            var LCalculator = new Calculator(LCalculationStack);
-            var ACalculator = new Calculator(ACalculationStack);
+            var LCalculator = new Calculator(listCalculationStack);
+            var ACalculator = new Calculator(arrayCalculationStack);
 
             Console.WriteLine("0 -- Exit; 1 -- No, let's calculate something");
             var command = "";
@@ -33,20 +33,20 @@ namespace StackCalculator
                     Console.WriteLine($"Calculator using stack using array says: {ACalculator.Evaluate(expression)}");
                 }
 
-                catch(FormatException exception)
+                catch (FormatException exception)
                 {
                     Console.WriteLine(exception.Message);
                 }
 
-                catch(DivideByZeroException)
+                catch (DivideByZeroException)
                 {
                     Console.WriteLine("Dividing by zero.");
                 }
 
                 finally
                 {
-                    LCalculationStack.Clear();
-                    ACalculationStack.Clear();
+                    listCalculationStack.Clear();
+                    arrayCalculationStack.Clear();
                 }
             }
         }

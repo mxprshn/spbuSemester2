@@ -64,7 +64,8 @@ namespace StackCalculator
         /// </summary>
         public void Clear()
         {
-            Array.Clear(elements, 0, pushPosition);
+            Array.Resize(ref elements, StartSize);
+            Array.Clear(elements, 0, StartSize);
             pushPosition = 0;
         }
     }
