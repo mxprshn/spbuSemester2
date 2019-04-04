@@ -7,6 +7,8 @@ namespace WalkingDog
     {
         public int Height { get; }
         public int Width { get; }
+        public int LeftDogSpawnPosition { get; } = -1;
+        public int TopDogSpawnPosition { get; } = -1;
         private char[,] filling;
 
         public char this[int top, int left]
@@ -41,11 +43,39 @@ namespace WalkingDog
                             currentCharacter = (char)mapReader.Read();
                         }
 
-                        filling[i, j] = currentCharacter;
+                        if (currentCharacter == '@')
+                        {
+                            TopDogSpawnPosition = i;
+                            LeftDogSpawnPosition = j;
+                            filling[i, j] = ' ';
+                        }
+                        else
+                        {
+                            filling[i, j] = currentCharacter;
+                        }
                     }
 
                 }
+
+                if (!mapReader.EndOfStream)
+                {
+                    throw new MapFormatException("The map doesn't match its size.");
+                }
             }
+        }
+
+        public void Render(int top, int left)
+        {
+            var startConsoleLeft = Console.CursorLeft;
+            var startConsoleTop = Console.CursorTop;
+
+            Console.CursorLeft += left;
+            Console.CursorTop += top;
+
+            Console.Write(filling[top, left]);
+
+            Console.CursorLeft = startConsoleLeft;
+            Console.CursorTop = startConsoleTop;
         }
 
         public void Render()

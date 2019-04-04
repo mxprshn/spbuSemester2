@@ -7,47 +7,65 @@ namespace WalkingDog
         private Map currentMap;
         private Dog walkingDog;
 
-        public DogHandler(EventLoop eventLoop)
+        public DogHandler()
         {
             currentMap = new Map("..\\..\\Map.txt");
-            walkingDog = new Dog(currentMap);
-
-            eventLoop.LeftPressed += LeftMovement;
-            eventLoop.RightPressed += RightMovement;
-            eventLoop.UpPressed += UpMovement;
-            eventLoop.DownPressed += DownMovement;
+            walkingDog = new Dog(currentMap.TopDogSpawnPosition, currentMap.LeftDogSpawnPosition);
 
             Console.CursorVisible = false;
-            Console.Title = "Dog Simulator 2019";
+            Console.WriteLine("Welcome to Dog Simulator 2019!\n" +
+                "Use arrow keys to control the dog.\n" +
+                "Press 'Escape' to exit.\n");
+
             currentMap.Render();
             walkingDog.Render();
         }
 
-        private void LeftMovement(object sender, EventArgs e)
+        public void LeftDogMovement(object sender, EventArgs e)
         {
-            walkingDog.Clear();
-            walkingDog.MoveLeft();
+            currentMap.Render(walkingDog.TopPosition, walkingDog.LeftPosition);
+
+            if (currentMap[walkingDog.TopPosition, walkingDog.LeftPosition - 1] == ' ')
+            {
+                walkingDog.MoveLeft();
+            }
+
             walkingDog.Render();
         }
 
-        private void RightMovement(object sender, EventArgs e)
+        public void RightDogMovement(object sender, EventArgs e)
         {
-            walkingDog.Clear();
-            walkingDog.MoveRight();
+            currentMap.Render(walkingDog.TopPosition, walkingDog.LeftPosition);
+
+            if (currentMap[walkingDog.TopPosition, walkingDog.LeftPosition + 1] == ' ')
+            {
+                walkingDog.MoveRight();
+            }
+
             walkingDog.Render();
         }
 
-        private void UpMovement(object sender, EventArgs e)
+        public void UpDogMovement(object sender, EventArgs e)
         {
-            walkingDog.Clear();
-            walkingDog.MoveUp();
+            currentMap.Render(walkingDog.TopPosition, walkingDog.LeftPosition);
+
+            if (currentMap[walkingDog.TopPosition - 1, walkingDog.LeftPosition] == ' ')
+            {
+                walkingDog.MoveUp();
+            }
+
             walkingDog.Render();
         }
 
-        private void DownMovement(object sender, EventArgs e)
+        public void DownDogMovement(object sender, EventArgs e)
         {
-            walkingDog.Clear();
-            walkingDog.MoveDown();
+            currentMap.Render(walkingDog.TopPosition, walkingDog.LeftPosition);
+
+            if (currentMap[walkingDog.TopPosition + 1, walkingDog.LeftPosition] == ' ')
+            {
+                walkingDog.MoveDown();
+            }
+
             walkingDog.Render();
         }
     }
