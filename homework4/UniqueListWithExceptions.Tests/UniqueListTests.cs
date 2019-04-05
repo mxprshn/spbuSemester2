@@ -1,47 +1,45 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using NUnit.Framework;
 using System.IO;
 
 namespace UniqueListWithExceptions.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class UniqueListTests
     {
         private UniqueList testList;
         private StreamReader testFileReader;
 
-        [TestInitialize]
-        public void Initialize()
+        [SetUp]
+        public void SetUp()
         {
             testList = new UniqueList();
-            testFileReader = new StreamReader("..\\..\\UniqueListTestsStrings.txt");
+            testFileReader = new StreamReader(TestContext.CurrentContext.TestDirectory + ".\\UniqueListTestsStrings.txt");
         }
 
-        [TestCleanup]
-        public void CleanUp()
+        [TearDown]
+        public void TearDown()
         {
             testFileReader.Close();
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeInsertFirstTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             Assert.AreEqual(newString, testList[0]);
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ExistingElementInsertionException))]
+        [Test]
         public void EqualStringsInsertFirstTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
-            testList.InsertFirst(newString);
+            Assert.Throws<ExistingElementInsertionException>(() => testList.InsertFirst(newString));
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleInsertFirstTest()
         {
             while (!testFileReader.EndOfStream)
@@ -58,56 +56,53 @@ namespace UniqueListWithExceptions.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeInsertAfterTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertAfter(newString2, 0);
             Assert.AreEqual(newString2, testList[1]);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ExistingElementInsertionException))]
+        [Test]
         public void EqualStringsInsertAfterTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
-            testList.InsertAfter(newString, 0);
+            Assert.Throws<ExistingElementInsertionException>(() => testList.InsertAfter(newString, 0));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(EmptyListOperationException))]
+        [Test]
         public void EmptyListInsertAfterTest()
         {
-            string newString = "Hello, World!!!";
-            testList.InsertAfter(newString, 3);
+            var newString = "Hello, World!!!";
+            Assert.Throws<EmptyListOperationException>(() => testList.InsertAfter(newString, 3));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(IncorrectIndexException))]
+        [Test]
         public void IncorrectIndexInsertAfterTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
-            testList.InsertAfter(newString2, -11);
+            Assert.Throws<IncorrectIndexException>(() => testList.InsertAfter(newString2, -11));
         }
 
-        [TestMethod()]
+        [Test]
         public void MiddleInsertAfterTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString1);
             testList.InsertAfter(newString2, 0);
             Assert.AreEqual(newString2, testList[1]);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleToEndInsertAfterTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());

@@ -1,40 +1,40 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System.IO;
 
 namespace UniqueListWithExceptions.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class ListTests
     {
         private List testList;
         private StreamReader testFileReader;
 
-        [TestInitialize]
-        public void Initialize()
+        [SetUp]
+        public void SetUp()
         {
             testList = new List();
-            testFileReader = new StreamReader("..\\..\\ListTestsStrings.txt");
+            testFileReader = new StreamReader(TestContext.CurrentContext.TestDirectory + ".\\ListTestsStrings.txt");
         }
 
-        [TestCleanup]
-        public void CleanUp()
+        [TearDown]
+        public void TearDown()
         {
             testFileReader.Close();
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeInsertFirstTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             Assert.AreEqual(newString, testList[0]);
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void EqualStringsInsertFirstTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             testList.InsertFirst(newString);
             Assert.AreEqual(newString, testList[1]);
@@ -42,7 +42,7 @@ namespace UniqueListWithExceptions.Tests
             Assert.AreEqual(2, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleInsertFirstTest()
         {
             while (!testFileReader.EndOfStream)
@@ -59,47 +59,45 @@ namespace UniqueListWithExceptions.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeInsertAfterTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertAfter(newString2, 0);
             Assert.AreEqual(newString2, testList[1]);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(EmptyListOperationException))]
+        [Test]
         public void EmptyListInsertAfterTest()
         {
             string newString = "Hello, World!!!";
-            testList.InsertAfter(newString, 3);
+            Assert.Throws<EmptyListOperationException>(() => testList.InsertAfter(newString, 3));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(IncorrectIndexException))]
+        [Test]
         public void IncorrectIndexInsertAfterTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
-            testList.InsertAfter(newString2, -11);
+            Assert.Throws<IncorrectIndexException>(() => testList.InsertAfter(newString2, -11));
         }
 
-        [TestMethod()]
+        [Test]
         public void MiddleInsertAfterTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString1);
             testList.InsertAfter(newString2, 0);
             Assert.AreEqual(newString2, testList[1]);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleToEndInsertAfterTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());
@@ -118,7 +116,7 @@ namespace UniqueListWithExceptions.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void DoubleMultipleInsertAfterTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());
@@ -144,11 +142,11 @@ namespace UniqueListWithExceptions.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeRemoveFirstTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertFirst(newString2);
             testList.RemoveFirst();
@@ -156,14 +154,13 @@ namespace UniqueListWithExceptions.Tests
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(EmptyListOperationException))]
+        [Test]
         public void EmptyListRemoveFirstTest()
         {
-            testList.RemoveFirst();
+            Assert.Throws<EmptyListOperationException>(() => testList.RemoveFirst());
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleRemoveFirstTest()
         {
             while (!testFileReader.EndOfStream)
@@ -181,41 +178,39 @@ namespace UniqueListWithExceptions.Tests
             Assert.AreEqual(0, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeRemoveTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertFirst(newString2);
             testList.Remove(1);
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(EmptyListOperationException))]
+        [Test]
         public void EmptyListRemoveTest()
         {
-            testList.Remove(1);
+            Assert.Throws<EmptyListOperationException>(() => testList.Remove(1));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(IncorrectIndexException))]
+        [Test]
         public void IncorrectIndexRemoveTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertFirst(newString2);
-            testList.Remove(testList.Length);
+            Assert.Throws<IncorrectIndexException>(() => testList.Remove(testList.Length));
         }
 
-        [TestMethod()]
+        [Test]
         public void MiddleRemoveTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
@@ -224,7 +219,7 @@ namespace UniqueListWithExceptions.Tests
             Assert.AreEqual(newString3, testList[1]);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleRemoveTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());
@@ -255,12 +250,12 @@ namespace UniqueListWithExceptions.Tests
             Assert.AreEqual(ExpectedLength / 2, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void RemoveByValueSmokeTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
@@ -269,16 +264,16 @@ namespace UniqueListWithExceptions.Tests
             Assert.AreEqual(newString3, testList[1]);
         }
 
-        [TestMethod()]
+        [Test]
         public void OnlyElementRemoveByValueTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             testList.Remove("Hello, World!!!");
             Assert.IsTrue(testList.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleRemoveByValueTest()
         {
             while (!testFileReader.EndOfStream)
@@ -295,8 +290,7 @@ namespace UniqueListWithExceptions.Tests
             }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(NotExistingElementRemovalException))]
+        [Test]
         public void NotExistingStringRemoveByValueTest()
         {
             while (!testFileReader.EndOfStream)
@@ -305,74 +299,71 @@ namespace UniqueListWithExceptions.Tests
             }
 
             var targetString = "MathMech is the best of all.";
-            testList.Remove(targetString);
+            Assert.Throws<NotExistingElementRemovalException>(() => testList.Remove(targetString));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(EmptyListOperationException))]
+        [Test]
         public void EmptyListRemoveByValueTest()
         {
             var targetString = "Hello, world!!!";
-            testList.Remove(targetString);
+            Assert.Throws<EmptyListOperationException>(() => testList.Remove(targetString));
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeExistsTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             Assert.IsTrue(testList.Exists(newString));
         }
 
-        [TestMethod()]
+        [Test]
         public void NotExistsTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             Assert.IsFalse(testList.Exists(newString2));
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeFindPositionTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
             Assert.AreEqual(1, testList.FindPosition(newString2));
         }
 
-        [TestMethod()]
+        [Test]
         public void EqualStringsFindPositionTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "First string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "First string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
             Assert.AreEqual(0, testList.FindPosition(newString3));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(NotExistingElementRequestException))]
+        [Test]
         public void NotExistingStringFindPositionTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
-            Assert.AreEqual(-1, testList.FindPosition(newString3));
+            Assert.Throws<NotExistingElementRequestException>(() => testList.FindPosition(newString3));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(EmptyListOperationException))]
+        [Test]
         public void EmptyListFindPositionTest()
         {
-            string newString = "Hello, World!!!";
-            Assert.AreEqual(-1, testList.FindPosition(newString));
+            var newString = "Hello, World!!!";
+            Assert.Throws<EmptyListOperationException>(() => testList.FindPosition(newString));
         }
     }
 }
