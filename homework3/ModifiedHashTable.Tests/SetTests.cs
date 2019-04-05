@@ -27,79 +27,112 @@ namespace ModifiedHashTable.Tests
         }
 
         [TestMethod()]
-        public void SmokeAddRollingHashTest()
+        [DataRow("Hello, World!!!")]
+        [DataRow("How razorback-jumping frogs can level six piqued gymnasts!")]
+        [DataRow("")]
+        public void SmokeAddRollingHashTest(string input)
         {
-            bool addResult = false;
-            addResult = testRollingHashSet.Add("Hello, World!!!");
+            bool addResult;
+            addResult = testRollingHashSet.Add(input);
             Assert.IsTrue(addResult);
         }
 
         [TestMethod()]
-        public void SmokeAddJenkinsHashTest()
+        [DataRow("Hello, World!!!")]
+        [DataRow("How razorback-jumping frogs can level six piqued gymnasts!")]
+        [DataRow("")]
+        public void SmokeAddJenkinsHashTest(string input)
         {
-            bool addResult = false;
-            addResult = testJenkinsHashSet.Add("Hello, World!!!");
+            bool addResult;
+            addResult = testJenkinsHashSet.Add(input);
             Assert.IsTrue(addResult);
         }
 
         [TestMethod()]
-        public void SmokeAddFNVHashTest()
+        [DataRow("Hello, World!!!")]
+        [DataRow("How razorback-jumping frogs can level six piqued gymnasts!")]
+        [DataRow("")]
+        public void SmokeAddFNVHashTest(string input)
         {
-            bool addResult = false;
-            addResult = testFNVHashSet.Add("Hello, World!!!");
+            bool addResult;
+            addResult = testFNVHashSet.Add(input);
             Assert.IsTrue(addResult);
         }
 
-        [TestMethod()]
-        public void LongStringAddRollingHashTest()
-        {
-            bool addResult = false;
-            addResult = testRollingHashSet.Add("How razorback-jumping frogs " +
-                "can level six piqued gymnasts!");
-            Assert.IsTrue(addResult);
-        }
+        //[TestMethod()]
+        //public void SmokeAddRollingHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testRollingHashSet.Add("Hello, World!!!");
+        //    Assert.IsTrue(addResult);
+        //}
 
-        [TestMethod()]
-        public void LongStringAddJenkinsHashTest()
-        {
-            bool addResult = false;
-            addResult = testJenkinsHashSet.Add("How razorback-jumping frogs " +
-                "can level six piqued gymnasts!");
-            Assert.IsTrue(addResult);
-        }
+        //[TestMethod()]
+        //public void SmokeAddJenkinsHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testJenkinsHashSet.Add("Hello, World!!!");
+        //    Assert.IsTrue(addResult);
+        //}
 
-        [TestMethod()]
-        public void LongStringAddFNVHashTest()
-        {
-            bool addResult = false;
-            addResult = testFNVHashSet.Add("How razorback-jumping frogs " +
-                "can level six piqued gymnasts!");
-            Assert.IsTrue(addResult);
-        }
+        //[TestMethod()]
+        //public void SmokeAddFNVHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testFNVHashSet.Add("Hello, World!!!");
+        //    Assert.IsTrue(addResult);
+        //}
 
-        [TestMethod()]
-        public void EmptyStringAddRollingHashTest()
-        {
-            bool addResult = false;
-            addResult = testRollingHashSet.Add("");
-            Assert.IsTrue(addResult);
-        }
+        //[TestMethod()]
+        //public void LongStringAddRollingHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testRollingHashSet.Add("How razorback-jumping frogs " +
+        //        "can level six piqued gymnasts!");
+        //    Assert.IsTrue(addResult);
+        //}
 
-        [TestMethod()]
-        public void EmptyStringAddJenkinsHashTest()
-        {
-            bool addResult = false;
-            addResult = testJenkinsHashSet.Add("");
-            Assert.IsTrue(addResult);
-        }
+        //[TestMethod()]
+        //public void LongStringAddJenkinsHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testJenkinsHashSet.Add("How razorback-jumping frogs " +
+        //        "can level six piqued gymnasts!");
+        //    Assert.IsTrue(addResult);
+        //}
 
-        [TestMethod()]
-        public void EmptyStringAddFNVHashTest()
-        {
-            bool addResult = false;
-            addResult = testFNVHashSet.Add("");
-            Assert.IsTrue(addResult);
-        }
+        //[TestMethod()]
+        //public void LongStringAddFNVHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testFNVHashSet.Add("How razorback-jumping frogs " +
+        //        "can level six piqued gymnasts!");
+        //    Assert.IsTrue(addResult);
+        //}
+
+        //[TestMethod()]
+        //public void EmptyStringAddRollingHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testRollingHashSet.Add("");
+        //    Assert.IsTrue(addResult);
+        //}
+
+        //[TestMethod()]
+        //public void EmptyStringAddJenkinsHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testJenkinsHashSet.Add("");
+        //    Assert.IsTrue(addResult);
+        //}
+
+        //[TestMethod()]
+        //public void EmptyStringAddFNVHashTest()
+        //{
+        //    bool addResult = false;
+        //    addResult = testFNVHashSet.Add("");
+        //    Assert.IsTrue(addResult);
+        //}
 
         [TestMethod()]
         public void MultipleAddRollingHashTest()
