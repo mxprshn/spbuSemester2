@@ -1,27 +1,28 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System;
 
 namespace StackCalculator.Tests
 {
-    [TestClass()]
-    public class ArrayStackTests
+    [TestFixture(typeof(ListStack))]
+    [TestFixture(typeof(ArrayStack))]
+    public class StackTests<TStack> where TStack : IStack, new()
     {
-        private ArrayStack testStack;
+        private IStack testStack;
 
-        [TestInitialize()]
+        [SetUp]
         public void Initialize()
         {
-            testStack = new ArrayStack();
+            testStack = new TStack();
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokePushTest()
         {
             testStack.Push(0);
             Assert.IsFalse(testStack.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultiplePushTest()
         {
             testStack.Push(0);
@@ -32,7 +33,7 @@ namespace StackCalculator.Tests
             Assert.IsFalse(testStack.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleEqualPushTest()
         {
             for (var i = 0; i < 100; ++i)
@@ -43,7 +44,7 @@ namespace StackCalculator.Tests
             Assert.IsFalse(testStack.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokePopTest()
         {
             var value = 777;
@@ -53,7 +54,7 @@ namespace StackCalculator.Tests
             Assert.IsTrue(testStack.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultiplePopTest()
         {
             for (var i = 0; i <= 100; ++i)
@@ -70,14 +71,13 @@ namespace StackCalculator.Tests
             Assert.IsTrue(testStack.IsEmpty);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void PopFromEmptyTest()
         {
-            _ = testStack.Pop();
+            Assert.Throws<InvalidOperationException>(() => testStack.Pop());
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokePeekTest()
         {
             var value = 777;
@@ -87,14 +87,13 @@ namespace StackCalculator.Tests
             Assert.IsFalse(testStack.IsEmpty);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void PeekFromEmptyTest()
         {
-            _ = testStack.Peek();
+            Assert.Throws<InvalidOperationException>(() => testStack.Peek());
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeClearTest()
         {
             var value = 777;
@@ -103,7 +102,7 @@ namespace StackCalculator.Tests
             Assert.IsTrue(testStack.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleClearTest()
         {
             for (var i = 0; i < 100; ++i)
@@ -115,7 +114,7 @@ namespace StackCalculator.Tests
             Assert.IsTrue(testStack.IsEmpty);
         }
 
-        [TestMethod()]
+        [Test]
         public void ClearEmptyTest()
         {
             testStack.Clear();

@@ -1,109 +1,57 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System;
 
 namespace StackCalculator.Tests
 {
-    [TestClass()]
-    public class CalculatorTests
+    [TestFixture(typeof(ListStack))]
+    [TestFixture(typeof(ArrayStack))]
+    public class CalculatorTests<TStack> where TStack : IStack, new()
     {
-        private Calculator testListCalculator;
-        private Calculator testArrayCalculator;
+        private Calculator testCalculator;
 
-        [TestInitialize()]
+        [SetUp]
         public void Initialize()
         {
-            testListCalculator = new Calculator(new ListStack());
-            testArrayCalculator = new Calculator(new ArrayStack());
+            testCalculator = new Calculator(new TStack());
         }
 
-        [TestMethod()]
-        [DataRow("2 2 +", 4)]
-        [DataRow("2 10 -", -8)]
-        [DataRow("3 21 + 10 * 31 11 - 4 * /", 3)]
-        [DataRow("1234567890 912915757 +", 2147483647)]
-        [DataRow("2147483647 1 +", -2147483648)]
-        [DataRow("2 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 *", 131072)]
-        [DataRow("1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 +" +
+        [Test]
+        [TestCase("2 2 +", ExpectedResult = 4)]
+        [TestCase("2 10 -", ExpectedResult = -8)]
+        [TestCase("3 21 + 10 * 31 11 - 4 * /", ExpectedResult = 3)]
+        [TestCase("1234567890 912915757 +", ExpectedResult = 2147483647)]
+        [TestCase("2147483647 1 +", ExpectedResult = -2147483648)]
+        [TestCase("2 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 *", ExpectedResult = 131072)]
+        [TestCase("1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 +" +
                 " * * * * * * * * * * 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 -" +
-                " * * * * * * * * * * /", 1)]
-        [DataRow("0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 *" +
+                " * * * * * * * * * * /", ExpectedResult = 1)]
+        [TestCase("0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 *" +
                 " 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 *" +
-                " + - * + - * + - * + - * + - * + - * + - * + - * + -", 0)]
-        [DataRow("-10 -10 - -20 -20 - -1234567890 -1234567890 - + *", 0)]
-        [DataRow("2147483647 1 +", -2147483648)]
-        [DataRow("31415926", 31415926)]
-        public void ListCalculatorEvaluateTest(string testExpression, int expectedResult)
-        {
-            var result = testListCalculator.Evaluate(testExpression);
-            Assert.AreEqual(expectedResult, result);
-        }
+                " + - * + - * + - * + - * + - * + - * + - * + - * + -", ExpectedResult = 0)]
+        [TestCase("-10 -10 - -20 -20 - -1234567890 -1234567890 - + *", ExpectedResult = 0)]
+        [TestCase("2147483647 1 +", ExpectedResult = -2147483648)]
+        [TestCase("31415926", ExpectedResult = 31415926)]
+        public int ListCalculatorEvaluateTest(string testExpression) => testCalculator.Evaluate(testExpression);
 
-        [TestMethod()]
-        [DataRow("2 2 +", 4)]
-        [DataRow("2 10 -", -8)]
-        [DataRow("3 21 + 10 * 31 11 - 4 * /", 3)]
-        [DataRow("1234567890 912915757 +", 2147483647)]
-        [DataRow("2147483647 1 +", -2147483648)]
-        [DataRow("2 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 *", 131072)]
-        [DataRow("1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 + 1 1 +" +
-        " * * * * * * * * * * 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 - 3 1 -" +
-        " * * * * * * * * * * /", 1)]
-        [DataRow("0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 *" +
-        " 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 * 0 0 + 0 0 - 0 0 *" +
-        " + - * + - * + - * + - * + - * + - * + - * + - * + -", 0)]
-        [DataRow("-10 -10 - -20 -20 - -1234567890 -1234567890 - + *", 0)]
-        [DataRow("2147483647 1 +", -2147483648)]
-        [DataRow("31415926", 31415926)]
-        public void ArrayCalculatorEvaluateTest(string testExpression, int expectedResult)
-        {
-            var result = testArrayCalculator.Evaluate(testExpression);
-            Assert.AreEqual(expectedResult, result);
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(FormatException))]
-        [DataRow("100 * 100 + 100 - 100 / 100")]
-        [DataRow("3.1415 2.7182 +")]
-        [DataRow("100 200-")]
-        [DataRow("divide five by two PLEASE")]
-        [DataRow("5 5 =")]
-        [DataRow("1000000000000 2000000000000 *")]
-        [DataRow("a b *")]
-        [DataRow("")]
+        [Test]
+        [TestCase("100 * 100 + 100 - 100 / 100")]
+        [TestCase("3.1415 2.7182 +")]
+        [TestCase("100 200-")]
+        [TestCase("divide five by two PLEASE")]
+        [TestCase("5 5 =")]
+        [TestCase("1000000000000 2000000000000 *")]
+        [TestCase("a b *")]
+        [TestCase("")]
         public void IncorrectInputListCalculatorEvaluateTest(string testExpression)
         {
-            _ = testListCalculator.Evaluate(testExpression);
+            Assert.Throws<FormatException>(() => testCalculator.Evaluate(testExpression));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(FormatException))]
-        [DataRow("100 * 100 + 100 - 100 / 100")]
-        [DataRow("3.1415 2.7182 +")]
-        [DataRow("100 200-")]
-        [DataRow("divide five by two PLEASE")]
-        [DataRow("5 5 =")]
-        [DataRow("1000000000000 2000000000000 *")]
-        [DataRow("a b *")]
-        [DataRow("")]
-        public void IncorrectInputArrayCalculatorEvaluateTest(string testExpression)
-        {
-            _ = testArrayCalculator.Evaluate(testExpression);
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(DivideByZeroException))]
-        public void DividingByZeroListCalculatorEvaluateTest()
-        {
-            string testExpression = "5 0 /";
-            _ = testListCalculator.Evaluate(testExpression);
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(DivideByZeroException))]
+        [Test]
         public void DividingByZeroArrayCalculatorEvaluateTest()
         {
             string testExpression = "5 0 /";
-            _ = testArrayCalculator.Evaluate(testExpression);
+            Assert.Throws<DivideByZeroException>(() => testCalculator.Evaluate(testExpression)); ;
         }
     }
 }
