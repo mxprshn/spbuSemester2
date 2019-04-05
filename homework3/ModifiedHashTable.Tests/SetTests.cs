@@ -15,7 +15,7 @@ namespace ModifiedHashTable.Tests
         public void SetUp()
         {
             testSet = new Set(new THashFunction());
-            testFileReader = new StreamReader("SetTestsStrings.txt");
+            testFileReader = new StreamReader(".\\SetTestsStrings.txt");
         }
 
         [TearDown]

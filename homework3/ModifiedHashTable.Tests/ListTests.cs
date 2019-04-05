@@ -14,7 +14,7 @@ namespace SinglyLinkedList.Tests
         public void SetUp()
         {
             testList = new List();
-            testFileReader = new StreamReader("ListTestsStrings.txt");
+            testFileReader = new StreamReader(".\\ListTestsStrings.txt");
         }
 
         [TearDown]
