@@ -35,12 +35,12 @@ namespace SinglyLinkedList
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty");
+                throw new InvalidOperationException("The list was empty.");
             }
 
             if (position < 0 || position >= Length)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position");
+                throw new ArgumentOutOfRangeException("Incorrect index of position.");
             }
 
             var temp = head;
@@ -86,7 +86,7 @@ namespace SinglyLinkedList
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException("The list was empty");
+                throw new InvalidOperationException("The list was empty.");
             }
 
             head = head.Next;
@@ -110,7 +110,7 @@ namespace SinglyLinkedList
 
             if (position == Length)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position");
+                throw new ArgumentOutOfRangeException("Incorrect index of position.");
             }
 
             var previousNode = FindNode(position - 1);

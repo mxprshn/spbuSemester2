@@ -31,8 +31,7 @@ namespace ModifiedHashTable
                 default:
                     {
                         return;
-                    }
-                    
+                    }                    
             }
 
             Console.WriteLine("Set created.");
@@ -42,51 +41,59 @@ namespace ModifiedHashTable
         private static void UserInterface(Set set)
         {
             Console.WriteLine("0 -- Exit; 1 - Add a value; 2 -- Remove a value; 3 -- Check a value for existence");
-            string command = "";
+            var command = "";
 
             while (command != "0")
             {
                 command = Console.ReadLine();
 
-                if (command == "1")
+                switch (command)
                 {
-                    Console.Write("Enter a value to add: ");
+                    case "1":
+                        {
+                            Console.Write("Enter a value to add: ");
 
-                    if (set.Add(Console.ReadLine()))
-                    {
-                        Console.WriteLine("Value added.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Value already exists.");
-                    }
-                }
-                else if (command == "2")
-                {
-                    Console.Write("Enter a value to remove: ");
+                            if (set.Add(Console.ReadLine()))
+                            {
+                                Console.WriteLine("Value added.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Value already exists.");
+                            }
 
-                    if (set.Remove(Console.ReadLine()))
-                    {
-                        Console.WriteLine("Value removed.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Value not found.");
-                    }
+                            break;
+                        }
+                    case "2":
+                        {
+                            Console.Write("Enter a value to remove: ");
 
-                }
-                else if (command == "3")
-                {
-                    Console.Write("Enter a value to find: ");
+                            if (set.Remove(Console.ReadLine()))
+                            {
+                                Console.WriteLine("Value removed.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Value not found.");
+                            }
 
-                    if (set.Exists(Console.ReadLine()))
-                    {
-                        Console.WriteLine("Value exists.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Value doesn't exist.");
-                    }
+                            break;
+                        }
+                    case "3":
+                        {
+                            Console.Write("Enter a value to find: ");
+
+                            if (set.Exists(Console.ReadLine()))
+                            {
+                                Console.WriteLine("Value exists.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Value doesn't exist.");
+                            }
+
+                            break;
+                        }
                 }
             }
         }

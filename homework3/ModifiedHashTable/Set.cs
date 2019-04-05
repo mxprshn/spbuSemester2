@@ -110,9 +110,6 @@ namespace ModifiedHashTable
         /// </summary>
         /// <param name="value">A string value to check for existence.</param>
         /// <returns>True if the value exists, otherwise False.</returns>
-        public bool Exists(string value)
-        {
-            return buckets[hashFunction.Hash(value) % (ulong)buckets.Length].Exists(value);
-        }
+        public bool Exists(string value) => buckets[hashFunction.Hash(value) % (ulong)buckets.Length].Exists(value);
     }
 }

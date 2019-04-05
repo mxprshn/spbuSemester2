@@ -1,412 +1,127 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System.IO;
 
 namespace ModifiedHashTable.Tests
 {
-    [TestClass()]
-    public class SetTests
+    [TestFixture(typeof(RollingHash))]
+    [TestFixture(typeof(JenkinsHash))]
+    [TestFixture(typeof(FNVHash))]
+    public class SetTests<THashFunction> where THashFunction : IHashFunction, new()
     {
-        private Set testRollingHashSet;
-        private Set testJenkinsHashSet;
-        private Set testFNVHashSet;
+        private Set testSet;
         private StreamReader testFileReader;
 
-        [TestInitialize]
-        public void Initialize()
+        [SetUp]
+        public void SetUp()
         {
-            testRollingHashSet = new Set(new RollingHash());
-            testJenkinsHashSet = new Set(new JenkinsHash());
-            testFNVHashSet = new Set(new FNVHash());
-            testFileReader = new StreamReader("..\\..\\SetTestsStrings.txt");
+            testSet = new Set(new THashFunction());
+            testFileReader = new StreamReader("SetTestsStrings.txt");
         }
 
-        [TestCleanup]
-        public void CleanUp()
+        [TearDown]
+        public void TearDown()
         {
             testFileReader.Close();
         }
 
-        [TestMethod()]
-        [DataRow("Hello, World!!!")]
-        [DataRow("How razorback-jumping frogs can level six piqued gymnasts!")]
-        [DataRow("")]
-        public void SmokeAddRollingHashTest(string input)
+        [Test]
+        [TestCase("Hello, World!!!")]
+        [TestCase("How razorback-jumping frogs can level six piqued gymnasts!")]
+        [TestCase("")]
+        public void SmokeAddTest(string input)
         {
             bool addResult;
-            addResult = testRollingHashSet.Add(input);
+            addResult = testSet.Add(input);
             Assert.IsTrue(addResult);
         }
 
-        [TestMethod()]
-        [DataRow("Hello, World!!!")]
-        [DataRow("How razorback-jumping frogs can level six piqued gymnasts!")]
-        [DataRow("")]
-        public void SmokeAddJenkinsHashTest(string input)
+        [Test]
+        public void MultipleAddTest()
         {
             bool addResult;
-            addResult = testJenkinsHashSet.Add(input);
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        [DataRow("Hello, World!!!")]
-        [DataRow("How razorback-jumping frogs can level six piqued gymnasts!")]
-        [DataRow("")]
-        public void SmokeAddFNVHashTest(string input)
-        {
-            bool addResult;
-            addResult = testFNVHashSet.Add(input);
-            Assert.IsTrue(addResult);
-        }
-
-        //[TestMethod()]
-        //public void SmokeAddRollingHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testRollingHashSet.Add("Hello, World!!!");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void SmokeAddJenkinsHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testJenkinsHashSet.Add("Hello, World!!!");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void SmokeAddFNVHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testFNVHashSet.Add("Hello, World!!!");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void LongStringAddRollingHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testRollingHashSet.Add("How razorback-jumping frogs " +
-        //        "can level six piqued gymnasts!");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void LongStringAddJenkinsHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testJenkinsHashSet.Add("How razorback-jumping frogs " +
-        //        "can level six piqued gymnasts!");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void LongStringAddFNVHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testFNVHashSet.Add("How razorback-jumping frogs " +
-        //        "can level six piqued gymnasts!");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void EmptyStringAddRollingHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testRollingHashSet.Add("");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void EmptyStringAddJenkinsHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testJenkinsHashSet.Add("");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        //[TestMethod()]
-        //public void EmptyStringAddFNVHashTest()
-        //{
-        //    bool addResult = false;
-        //    addResult = testFNVHashSet.Add("");
-        //    Assert.IsTrue(addResult);
-        //}
-
-        [TestMethod()]
-        public void MultipleAddRollingHashTest()
-        {
-            bool addResult = true;
-
-            while (!testFileReader.EndOfStream && addResult)
-            {
-                addResult = testRollingHashSet.Add(testFileReader.ReadLine());                
-            }
-
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        public void MultipleAddJenkinsHashTest()
-        {
-            bool addResult = true;
-
-            while (!testFileReader.EndOfStream && addResult)
-            {
-                addResult = testJenkinsHashSet.Add(testFileReader.ReadLine());
-            }
-
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        public void MultipleAddFNVHashTest()
-        {
-            bool addResult = true;
-
-            while (!testFileReader.EndOfStream && addResult)
-            {
-                addResult = testFNVHashSet.Add(testFileReader.ReadLine());
-            }
-
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        public void EqualStringsAddRollingHashTest()
-        {
-            bool addResult = false;
-
-            addResult = testRollingHashSet.Add("Pack my box with five dozen liquor jugs");
-            addResult = testRollingHashSet.Add("Pack my box with five dozen liquor jugs");
-
-            Assert.IsFalse(addResult);
-        }
-
-        [TestMethod()]
-        public void EqualStringsAddJenkinsHashTest()
-        {
-            bool addResult = false;
-
-            addResult = testJenkinsHashSet.Add("Pack my box with five dozen liquor jugs");
-            addResult = testJenkinsHashSet.Add("Pack my box with five dozen liquor jugs");
-
-            Assert.IsFalse(addResult);
-        }
-
-        [TestMethod()]
-        public void EqualStringsAddFNVHashTest()
-        {
-            bool addResult = false;
-
-            addResult = testFNVHashSet.Add("Pack my box with five dozen liquor jugs");
-            addResult = testFNVHashSet.Add("Pack my box with five dozen liquor jugs");
-
-            Assert.IsFalse(addResult);
-        }
-
-        [TestMethod()]
-        public void AlmostEqualStringsAddRollingHashTest()
-        {
-            bool addResult = false;
-
-            addResult = testRollingHashSet.Add("Pack my box with five dozen liquor jugs");
-            addResult = testRollingHashSet.Add("pack my box with five dozen liquor jugs");
-
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        public void AlmostEqualStringsAddJenkinsHashTest()
-        {
-            bool addResult = false;
-
-            addResult = testJenkinsHashSet.Add("Pack my box with five dozen liquor jugs");
-            addResult = testJenkinsHashSet.Add("pack my box with five dozen liquor jugs");
-
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        public void AlmostEqualStringsAddFNVHashTest()
-        {
-            bool addResult = false;
-
-            addResult = testFNVHashSet.Add("Pack my box with five dozen liquor jugs");
-            addResult = testFNVHashSet.Add("pack my box with five dozen liquor jugs");
-
-            Assert.IsTrue(addResult);
-        }
-
-        [TestMethod()]
-        public void SmokeRemoveRollingHashTest()
-        {
-            bool removeResult = false;
-            string testString = "Hello, World!!!";
-            testRollingHashSet.Add(testString);
-            removeResult = testRollingHashSet.Remove(testString);
-            Assert.IsTrue(removeResult);
-        }
-
-        [TestMethod()]
-        public void SmokeRemoveJenkinsHashTest()
-        {
-            bool removeResult = false;
-            string testString = "Hello, World!!!";
-            testJenkinsHashSet.Add(testString);
-            removeResult = testJenkinsHashSet.Remove(testString);
-            Assert.IsTrue(removeResult);
-        }
-
-        [TestMethod()]
-        public void SmokeRemoveFNVHashTest()
-        {
-            bool removeResult = false;
-            string testString = "Hello, World!!!";
-            testFNVHashSet.Add(testString);
-            removeResult = testFNVHashSet.Remove(testString);
-            Assert.IsTrue(removeResult);
-        }
-
-        [TestMethod()]
-        public void MultipleRemoveRollingHashTest()
-        {
-            bool removeResult = true;
 
             while (!testFileReader.EndOfStream)
             {
-                testRollingHashSet.Add(testFileReader.ReadLine());
+                addResult = testSet.Add(testFileReader.ReadLine());
+                Assert.IsTrue(addResult);
+            }            
+        }
+
+        [Test]
+        public void EqualStringsAddTest()
+        {
+            bool addResult;
+
+            testSet.Add("Pack my box with five dozen liquor jugs");
+            addResult = testSet.Add("Pack my box with five dozen liquor jugs");
+
+            Assert.IsFalse(addResult);
+        }
+
+        [Test]
+        public void AlmostEqualStringsAddTest()
+        {
+            bool addResult;
+
+            testSet.Add("Pack my box with five dozen liquor jugs");
+            addResult = testSet.Add("pack my box with five dozen liquor jugs");
+
+            Assert.IsTrue(addResult);
+        }
+
+        [Test]
+        public void SmokeRemoveTest()
+        {
+            bool removeResult;
+            var testString = "Hello, World!!!";
+            testSet.Add(testString);
+            removeResult = testSet.Remove(testString);
+            Assert.IsTrue(removeResult);
+        }
+
+        [Test]
+        public void MultipleRemoveTest()
+        {
+            bool removeResult;
+
+            while (!testFileReader.EndOfStream)
+            {
+                testSet.Add(testFileReader.ReadLine());
             }
 
             testFileReader.DiscardBufferedData();
             testFileReader.BaseStream.Seek(0, SeekOrigin.Begin);
 
-            while (!testFileReader.EndOfStream && removeResult)
-            {
-                removeResult = testRollingHashSet.Remove(testFileReader.ReadLine());
-            }
-
-            Assert.IsTrue(removeResult);
-        }
-
-        [TestMethod()]
-        public void MultipleRemoveJenkinsHashTest()
-        {
-            bool removeResult = true;
-
             while (!testFileReader.EndOfStream)
             {
-                testJenkinsHashSet.Add(testFileReader.ReadLine());
-            }
-
-            testFileReader.DiscardBufferedData();
-            testFileReader.BaseStream.Seek(0, SeekOrigin.Begin);
-
-            while (!testFileReader.EndOfStream && removeResult)
-            {
-                removeResult = testJenkinsHashSet.Remove(testFileReader.ReadLine());
-            }
-
-            Assert.IsTrue(removeResult);
+                removeResult = testSet.Remove(testFileReader.ReadLine());
+                Assert.IsTrue(removeResult);
+            }            
         }
 
-        [TestMethod()]
-        public void MultipleRemoveFNVHashTest()
+        [Test]
+        public void NotExistingStringRemoveTest()
         {
             bool removeResult = true;
-
-            while (!testFileReader.EndOfStream)
-            {
-                testFNVHashSet.Add(testFileReader.ReadLine());
-            }
-
-            testFileReader.DiscardBufferedData();
-            testFileReader.BaseStream.Seek(0, SeekOrigin.Begin);
-
-            while (!testFileReader.EndOfStream && removeResult)
-            {
-                removeResult = testFNVHashSet.Remove(testFileReader.ReadLine());
-            }
-
-            Assert.IsTrue(removeResult);
-        }
-
-        [TestMethod()]
-        public void NotExistingStringRemoveRollingHashTest()
-        {
-            bool removeResult = true;
-            removeResult = testRollingHashSet.Remove("Goodbye, world!!!");
+            removeResult = testSet.Remove("Goodbye, world!!!");
             Assert.IsFalse(removeResult);
         }
 
-        [TestMethod()]
-        public void NotExistingStringRemoveJenkinsHashTest()
-        {
-            bool removeResult = true;
-            removeResult = testJenkinsHashSet.Remove("Goodbye, world!!!");
-            Assert.IsFalse(removeResult);
-        }
-
-        [TestMethod()]
-        public void NotExistingStringRemoveFNVHashTest()
-        {
-            bool removeResult = true;
-            removeResult = testFNVHashSet.Remove("Goodbye, world!!!");
-            Assert.IsFalse(removeResult);
-        }
-
-        [TestMethod()]
+        [Test]
         public void SmokeExistsRollingHashTest()
         {
-            bool exists = false;
-            string testString = "Hello, World!!!";
-            testRollingHashSet.Add(testString);
-            exists = testRollingHashSet.Exists(testString);
+            bool exists;
+            var testString = "Hello, World!!!";
+            testSet.Add(testString);
+            exists = testSet.Exists(testString);
             Assert.IsTrue(exists);
         }
 
-        [TestMethod()]
-        public void SmokeExistsJenkinsHashTest()
-        {
-            bool exists = false;
-            string testString = "Hello, World!!!";
-            testJenkinsHashSet.Add(testString);
-            exists = testJenkinsHashSet.Exists(testString);
-            Assert.IsTrue(exists);
-        }
-
-        [TestMethod()]
-        public void SmokeExistsFNVHashTest()
-        {
-            bool exists = false;
-            string testString = "Hello, World!!!";
-            testFNVHashSet.Add(testString);
-            exists = testFNVHashSet.Exists(testString);
-            Assert.IsTrue(exists);
-        }
-
-        [TestMethod()]
+        [Test]
         public void NotExistsRollingHashTest()
         {
             bool exists = true;
-            exists = testRollingHashSet.Exists("Good evening, world!!!");
-            Assert.IsFalse(exists);
-        }
-
-        [TestMethod()]
-        public void NotExistsJenkinsHashTest()
-        {
-            bool exists = true;
-            exists = testJenkinsHashSet.Exists("Good evening, world!!!");
-            Assert.IsFalse(exists);
-        }
-
-        [TestMethod()]
-        public void NotExistsFNVHashTest()
-        {
-            bool exists = true;
-            exists = testFNVHashSet.Exists("Good evening, world!!!");
+            exists = testSet.Exists("Good evening, world!!!");
             Assert.IsFalse(exists);
         }
     }

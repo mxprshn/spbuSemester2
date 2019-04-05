@@ -1,41 +1,41 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using System;
 using System.IO;
 
 namespace SinglyLinkedList.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class ListTests
     {
         private List testList;
         private StreamReader testFileReader;
 
-        [TestInitialize]
-        public void Initialize()
+        [SetUp]
+        public void SetUp()
         {
             testList = new List();
-            testFileReader = new StreamReader("..\\..\\ListTestsStrings.txt");
+            testFileReader = new StreamReader("ListTestsStrings.txt");
         }
 
-        [TestCleanup]
-        public void CleanUp()
+        [TearDown]
+        public void TearDown()
         {
             testFileReader.Close();
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeInsertFirstTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             Assert.AreEqual(newString, testList[0]);
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void EqualStringsInsertFirstTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             testList.InsertFirst(newString);
             Assert.AreEqual(newString, testList[1]);
@@ -43,7 +43,7 @@ namespace SinglyLinkedList.Tests
             Assert.AreEqual(2, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleInsertFirstTest()
         {
             while (!testFileReader.EndOfStream)
@@ -60,47 +60,45 @@ namespace SinglyLinkedList.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeInsertAfterTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertAfter(newString2, 0);
             Assert.AreEqual(newString2, testList[1]);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void EmptyListInsertAfterTest()
         {
-            string newString = "Hello, World!!!";
-            testList.InsertAfter(newString, 3);
+            var newString = "Hello, World!!!";
+            Assert.Throws<InvalidOperationException>(() => testList.InsertAfter(newString, 3));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void IncorrectIndexInsertAfterTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
-            testList.InsertAfter(newString2, -11);
+            Assert.Throws<ArgumentOutOfRangeException>(() => testList.InsertAfter(newString2, -11));
         }
 
-        [TestMethod()]
+        [Test]
         public void MiddleInsertAfterTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString1);
             testList.InsertAfter(newString2, 0);
             Assert.AreEqual(newString2, testList[1]);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleToEndInsertAfterTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());
@@ -119,7 +117,7 @@ namespace SinglyLinkedList.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void DoubleMultipleInsertAfterTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());
@@ -145,11 +143,11 @@ namespace SinglyLinkedList.Tests
             }
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeRemoveFirstTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertFirst(newString2);
             testList.RemoveFirst();
@@ -157,14 +155,13 @@ namespace SinglyLinkedList.Tests
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void EmptyListRemoveFirstTest()
         {
-            testList.RemoveFirst();
+            Assert.Throws<InvalidOperationException>(() => testList.RemoveFirst());
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleRemoveFirstTest()
         {
             while (!testFileReader.EndOfStream)
@@ -182,41 +179,39 @@ namespace SinglyLinkedList.Tests
             Assert.AreEqual(0, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeRemoveTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertFirst(newString2);
             testList.Remove(1);
             Assert.AreEqual(1, testList.Length);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void EmptyListRemoveTest()
         {
-            testList.Remove(1);
+            Assert.Throws<InvalidOperationException>(() => testList.Remove(1));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void IncorrectIndexRemoveTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             testList.InsertFirst(newString2);
-            testList.Remove(testList.Length);
+            Assert.Throws<ArgumentOutOfRangeException>(() => testList.Remove(testList.Length));
         }
 
-        [TestMethod()]
+        [Test]
         public void MiddleRemoveTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
@@ -225,7 +220,7 @@ namespace SinglyLinkedList.Tests
             Assert.AreEqual(newString3, testList[1]);
         }
 
-        [TestMethod()]
+        [Test]
         public void MultipleRemoveTest()
         {
             testList.InsertFirst(testFileReader.ReadLine());
@@ -256,60 +251,60 @@ namespace SinglyLinkedList.Tests
             Assert.AreEqual(ExpectedLength / 2, testList.Length);
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeExistsTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             testList.InsertFirst(newString);
             Assert.IsTrue(testList.Exists(newString));
         }
 
-        [TestMethod()]
+        [Test]
         public void NotExistsTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString1);
             Assert.IsFalse(testList.Exists(newString2));
         }
 
-        [TestMethod()]
+        [Test]
         public void SmokeFindPositionTest()
         {
-            string newString1 = "Hello, World!!!";
-            string newString2 = "Bye, World!!!";
+            var newString1 = "Hello, World!!!";
+            var newString2 = "Bye, World!!!";
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
             Assert.AreEqual(1, testList.FindPosition(newString2));
         }
 
-        [TestMethod()]
+        [Test]
         public void EqualStringsFindPositionTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "First string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "First string";
             testList.InsertFirst(newString3);
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
             Assert.AreEqual(0, testList.FindPosition(newString3));
         }
 
-        [TestMethod()]
+        [Test]
         public void NotExistingStringFindPositionTest()
         {
-            string newString1 = "First string";
-            string newString2 = "Second string";
-            string newString3 = "Third string";
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
             testList.InsertFirst(newString2);
             testList.InsertFirst(newString1);
             Assert.AreEqual(-1, testList.FindPosition(newString3));
         }
 
-        [TestMethod()]
+        [Test]
         public void EmptyListFindPositionTest()
         {
-            string newString = "Hello, World!!!";
+            var newString = "Hello, World!!!";
             Assert.AreEqual(-1, testList.FindPosition(newString));
         }
     }
