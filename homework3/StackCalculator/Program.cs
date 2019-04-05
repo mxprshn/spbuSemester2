@@ -9,8 +9,8 @@ namespace StackCalculator
             var listCalculationStack = new ListStack();
             var arrayCalculationStack = new ArrayStack();
 
-            var LCalculator = new Calculator(listCalculationStack);
-            var ACalculator = new Calculator(arrayCalculationStack);
+            var listStackCalculator = new Calculator(listCalculationStack);
+            var arrayStackCalculator = new Calculator(arrayCalculationStack);
 
             Console.WriteLine("0 -- Exit; 1 -- No, let's calculate something");
             var command = "";
@@ -29,8 +29,8 @@ namespace StackCalculator
                     Console.Write("Enter a posfix expression (integer numbers, '+', '-', '*', '/', divided by spaces): ");
                     var expression = Console.ReadLine();
 
-                    Console.WriteLine($"Calculator using stack using list says: {LCalculator.Evaluate(expression)}");
-                    Console.WriteLine($"Calculator using stack using array says: {ACalculator.Evaluate(expression)}");
+                    Console.WriteLine($"Calculator using stack using list says: {listStackCalculator.Evaluate(expression)}");
+                    Console.WriteLine($"Calculator using stack using array says: {arrayStackCalculator.Evaluate(expression)}");
                 }
 
                 catch (FormatException exception)
