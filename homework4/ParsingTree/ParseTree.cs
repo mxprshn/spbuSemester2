@@ -28,9 +28,6 @@ namespace ParsingTree
         /// <summary>
         /// Prints the tree in the following format: (<operation> <operand/subtree> <operand/subtree>).
         /// </summary>
-        public void Print()
-        {
-            Root.Print();
-        }
+        public void Print() => Root.Print();
     }
 }

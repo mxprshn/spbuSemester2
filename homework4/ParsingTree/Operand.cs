@@ -24,9 +24,6 @@ namespace ParsingTree
         /// <summary>
         /// Prints the operand as its integer value.
         /// </summary>
-        public override void Print()
-        {
-            Console.Write($"{Value}");
-        }
+        public override void Print() => Console.Write($"{Value}");
     }
 }

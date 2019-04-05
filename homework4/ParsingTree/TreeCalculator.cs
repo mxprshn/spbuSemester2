@@ -72,7 +72,6 @@ namespace ParsingTree
                         {
                             throw new FormatException();
                         }
-
                 }
 
                 tokens.Dequeue();
