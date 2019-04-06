@@ -7,7 +7,6 @@ namespace WalkingDog
         public int TopPosition { get; private set; }
         public int LeftPosition { get; private set; }
 
-
         public Dog(int topSpawnPosition, int leftSpawnPosition)
         {
             TopPosition = topSpawnPosition;
@@ -27,7 +26,12 @@ namespace WalkingDog
             Console.CursorLeft += LeftPosition;
             Console.CursorTop += TopPosition;
 
+            var startColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.Write('@');
+
+            Console.ForegroundColor = startColor;
 
             Console.CursorLeft = startConsoleLeft;
             Console.CursorTop = startConsoleTop;

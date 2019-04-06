@@ -19,22 +19,22 @@ namespace WalkingDog
                 {
                     case ConsoleKey.LeftArrow:
                         {
-                            LeftPressed(this, EventArgs.Empty);
+                            LeftPressed?.Invoke(this, EventArgs.Empty);
                             break;
                         }
                     case ConsoleKey.RightArrow:
                         {
-                            RightPressed(this, EventArgs.Empty);
+                            RightPressed?.Invoke(this, EventArgs.Empty);
                             break;
                         }
                     case ConsoleKey.UpArrow:
                         {
-                            UpPressed(this, EventArgs.Empty);
+                            UpPressed?.Invoke(this, EventArgs.Empty);
                             break;
                         }
                     case ConsoleKey.DownArrow:
                         {
-                            DownPressed(this, EventArgs.Empty);
+                            DownPressed?.Invoke(this, EventArgs.Empty);
                             break;
                         }
                     case ConsoleKey.Escape:
