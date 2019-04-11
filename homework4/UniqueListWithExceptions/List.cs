@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace UniqueListWithExceptions
 {
     /// <summary>
@@ -166,7 +165,7 @@ namespace UniqueListWithExceptions
         /// <exception cref="IncorrectIndexException">Thrown when the parameter doesn't 
         /// match with any existing position.</exception>
         /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
-        public string this[int position]
+        public virtual string this[int position]
         {
             get => FindNode(position).Value;
 

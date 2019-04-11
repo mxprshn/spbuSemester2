@@ -120,5 +120,73 @@ namespace UniqueListWithExceptions.Tests
                 Assert.AreEqual(testFileReader.ReadLine(), testList[i]);
             }
         }
+
+        [Test]
+        public void SmokeGetTest()
+        {
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
+            testList.InsertFirst(newString3);
+            testList.InsertFirst(newString2);
+            testList.InsertFirst(newString1);
+            Assert.AreEqual(newString3, testList[2]);
+            Assert.AreEqual(newString2, testList[1]);
+            Assert.AreEqual(newString1, testList[0]);
+        }
+
+        [Test]
+        public void IncorrectIndexGetTest()
+        {
+            var newString = "Hello world, yeeeah!!!";
+            testList.InsertFirst(newString);
+            Assert.Throws<IncorrectIndexException>(() => _ = testList[1]);
+        }
+
+        [Test]
+        public void EmptyListGetTest()
+        {
+            Assert.Throws<EmptyListOperationException>(() => _ = testList[0]);
+        }
+
+        [Test]
+        public void SmokeSetTest()
+        {
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
+            testList.InsertFirst(newString3);
+            testList.InsertFirst(newString2);
+            testList[1] = newString1;
+            Assert.AreEqual(newString1, testList[1]);
+        }
+
+        [Test]
+        public void IncorrectIndexSetTest()
+        {
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            testList.InsertFirst(newString1);
+            Assert.Throws<IncorrectIndexException>(() => testList[1] = newString2);
+        }
+
+        [Test]
+        public void EmptyListSetTest()
+        {
+            var newString = "Hello world, yeeeah!!!";
+            Assert.Throws<EmptyListOperationException>(() => testList[0] = newString);
+        }
+
+        [Test]
+        public void EqualElementsSetTest()
+        {
+            var newString1 = "First string";
+            var newString2 = "Second string";
+            var newString3 = "Third string";
+            testList.InsertFirst(newString3);
+            testList.InsertFirst(newString2);
+            testList[1] = newString1;
+            Assert.Throws<ExistingElementInsertionException>(() => testList[0] = newString1);
+        }
     }
 }

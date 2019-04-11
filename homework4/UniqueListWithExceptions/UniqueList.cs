@@ -40,5 +40,29 @@ namespace UniqueListWithExceptions
 
             base.InsertAfter(newValue, previousPosition);
         }
+
+        /// <summary>
+        /// Gets/sets an element on particular position.
+        /// </summary>
+        /// <param name="position">Position of the element to get/set.</param>
+        /// <returns>A string element on </returns>
+        /// <exception cref="IncorrectIndexException">Thrown when the parameter doesn't 
+        /// match with any existing position.</exception>
+        /// <exception cref="EmptyListOperationException">Thrown when the list is empty.</exception>
+        /// <exception cref="ExistingElementInsertionException">Thrown when the value being set already exists.</exception>
+        public override string this[int position]
+        {
+            get => base[position];
+
+            set
+            {
+                if (Exists(value))
+                {
+                    throw new ExistingElementInsertionException();
+                }
+
+                base[position] = value;
+            }
+        }
     }
 }

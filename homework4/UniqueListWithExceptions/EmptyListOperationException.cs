@@ -11,8 +11,7 @@ namespace UniqueListWithExceptions
         public EmptyListOperationException() { }
         public EmptyListOperationException(string message) : base(message) { }
         public EmptyListOperationException(string message, Exception inner) : base(message, inner) { }
-        protected EmptyListOperationException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        protected EmptyListOperationException(System.Runtime.Serialization.SerializationInfo info,
+                System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }
