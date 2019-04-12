@@ -3,19 +3,31 @@ using System.IO;
 
 namespace WalkingDog
 {
+    /// <summary>
+    /// Class representing a map built from symbols.
+    /// </summary>
     public class Map : IRenderable
     {
         public int Height { get; }
         public int Width { get; }
-        public int LeftDogSpawnPosition { get; } = -1;
-        public int TopDogSpawnPosition { get; } = -1;
+
+        /// <summary>
+        /// Position on which a Dog can be spawned.
+        /// </summary>
+        public (int top, int left) DogSpawnPosition { get; } = (-1, -1);
+
+        /// <summary>
+        /// Position standing on which causes some actions.
+        /// </summary>
+        public (int top, int left) EscapePosition { get; } = (-1, -1);
+
         private char[,] filling;
 
         public char this[int top, int left]
         {
             get
             {
-                if (top < 0 || top >= Height || left < 0 || top >= Width)
+                if (top < 0 || top >= Height || left < 0 || left >= Width)
                 {
                     return '*';
                 }
@@ -28,8 +40,13 @@ namespace WalkingDog
         {
             using (var mapReader = new StreamReader(filePath))
             {
-                Height = int.Parse(mapReader.ReadLine());
-                Width = int.Parse(mapReader.ReadLine());
+                if (!int.TryParse(mapReader.ReadLine(), out int height) || !int.TryParse(mapReader.ReadLine(), out int width))
+                {
+                    throw new MapFormatException("Map size values not found.");
+                }
+
+                Height = height;
+                Width = width;
                 filling = new char[Height, Width];
 
                 for (var i = 0; i < Height; ++i)
@@ -45,8 +62,12 @@ namespace WalkingDog
 
                         if (currentCharacter == '@')
                         {
-                            TopDogSpawnPosition = i;
-                            LeftDogSpawnPosition = j;
+                            DogSpawnPosition = (i, j);
+                            filling[i, j] = ' ';
+                        }
+                        else if (currentCharacter == '#')
+                        {
+                            EscapePosition = (i, j);
                             filling[i, j] = ' ';
                         }
                         else
@@ -54,7 +75,6 @@ namespace WalkingDog
                             filling[i, j] = currentCharacter;
                         }
                     }
-
                 }
 
                 if (!mapReader.EndOfStream)
@@ -62,13 +82,18 @@ namespace WalkingDog
                     throw new MapFormatException("The map doesn't match its size.");
                 }
 
-                if (TopDogSpawnPosition < 0)
+                if (DogSpawnPosition.left < 0 || DogSpawnPosition.top < 0)
                 {
                     throw new MapFormatException("No spawn position for dog found.");
                 }
             }
         }
 
+        /// <summary>
+        /// Renders one square of the map.
+        /// </summary>
+        /// <param name="top">Position of the rendered square from the top of the map.</param>
+        /// <param name="left">Position of the rendered square from the left of the map.</param>
         public void Render(int top, int left)
         {
             var startConsoleLeft = Console.CursorLeft;
@@ -83,6 +108,9 @@ namespace WalkingDog
             Console.CursorTop = startConsoleTop;
         }
 
+        /// <summary>
+        /// Renders the map completely as matrix of symbols.
+        /// </summary>
         public void Render()
         {
             var startConsoleLeft = Console.CursorLeft;

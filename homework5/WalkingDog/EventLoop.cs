@@ -2,6 +2,9 @@
 
 namespace WalkingDog
 {
+    /// <summary>
+    /// Class catching user's actions and reacts on them.
+    /// </summary>
     public class EventLoop
     {
         public event EventHandler<EventArgs> LeftPressed;
@@ -9,6 +12,9 @@ namespace WalkingDog
         public event EventHandler<EventArgs> UpPressed;
         public event EventHandler<EventArgs> DownPressed;
 
+        /// <summary>
+        /// Starts waiting for user's actions.
+        /// </summary>
         public void Run()
         {
             while (true)
