@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task1
 {
@@ -10,7 +6,10 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Here will be test task.");
+            var queue = new PriorityQueue();
+            queue.Enqueue(10, 1000);
+            Console.WriteLine($"{queue.Dequeue()}");
+            Console.WriteLine("I don't know what to do here.");
         }
     }
 }
