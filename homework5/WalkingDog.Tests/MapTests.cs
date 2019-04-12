@@ -17,7 +17,7 @@ namespace WalkingDog.Tests
 
             using (var mapReader = new StreamReader(filePath))
             {
-                var expectedHeight = int.Parse(mapReader.ReadLine());
+                Assert.AreEqual(int.Parse(mapReader.ReadLine());
                 var expectedWidth = int.Parse(mapReader.ReadLine());
 
                 while (!mapReader.EndOfStream)
