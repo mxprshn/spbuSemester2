@@ -7,9 +7,9 @@ namespace WalkingDog
         private Map currentMap;
         private Dog walkingDog;
 
-        public DogHandler()
+        public DogHandler(string mapPath)
         {
-            currentMap = new Map("..\\..\\Map.txt");
+            currentMap = new Map(mapPath);
             walkingDog = new Dog(currentMap.TopDogSpawnPosition, currentMap.LeftDogSpawnPosition);
 
             Console.CursorVisible = false;

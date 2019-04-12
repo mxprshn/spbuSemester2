@@ -6,7 +6,7 @@ namespace WalkingDog
         static void Main(string[] args)
         {
             var eventLoop = new EventLoop();
-            var dogHandler = new DogHandler();
+            var dogHandler = new DogHandler("..\\..\\Map.txt");
 
             eventLoop.LeftPressed += dogHandler.LeftDogMovement;
             eventLoop.RightPressed += dogHandler.RightDogMovement;

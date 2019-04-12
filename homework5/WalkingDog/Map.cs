@@ -61,6 +61,11 @@ namespace WalkingDog
                 {
                     throw new MapFormatException("The map doesn't match its size.");
                 }
+
+                if (TopDogSpawnPosition < 0)
+                {
+                    throw new MapFormatException("No spawn position for dog found.");
+                }
             }
         }
 
