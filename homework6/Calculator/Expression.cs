@@ -9,9 +9,13 @@ namespace Calculator
     public class Expression
     {
         private string textExpression = "";
+
+        public string LastNumber { get; private set; } = "";
         private char lastSymbol = ' ';
+
         private bool wasComma = false;
-        private char[] operations = new char[] { '*', '/', '+', '-' };
+
+        private char[] operations = new char[] { '*', '/', '+', '-', '%' };
         private Stack<char> bracketStack = new Stack<char>();
 
         public override string ToString() => textExpression;
@@ -34,6 +38,7 @@ namespace Calculator
                 lastSymbol = ')';
                 bracketStack.Pop();
                 wasComma = false;
+                LastNumber = "";
             }
             else if (lastSymbol == ' ' || lastSymbol == '(' || IsOperation(lastSymbol))
             {
@@ -50,10 +55,11 @@ namespace Calculator
                 throw new ArgumentException();
             }
 
-            if (lastSymbol != ')')
+            if (lastSymbol != ')' && (LastNumber.Length == 0 || LastNumber[0] != '0' || wasComma))
             {
                 textExpression += digit;
                 lastSymbol = digit;
+                LastNumber += digit;
             }
         }
 
@@ -63,6 +69,7 @@ namespace Calculator
             {
                 textExpression += ',';
                 wasComma = true;
+                LastNumber += ',';
                 lastSymbol = ',';
             }
         }
@@ -79,15 +86,45 @@ namespace Calculator
                 textExpression += operation;
                 wasComma = false;
                 lastSymbol = operation;
+                LastNumber = "";
+            }
+            else if (operation == '-' && lastSymbol != '-' && LastNumber.Length == 0)
+            {
+                textExpression += operation;
+                lastSymbol = operation;
             }
         }
 
         public void Clear()
         {
             textExpression = "";
+            LastNumber = "";
             lastSymbol = ' ';
             bracketStack.Clear();
             wasComma = false;
+        }
+
+        public void ClearLast()
+        {
+            if (LastNumber.Length != 0)
+            {
+                if (LastNumber[LastNumber.Length - 1] == ',')
+                {
+                    wasComma = false;
+                }
+
+                textExpression = textExpression.Remove(textExpression.Length - 1);
+                LastNumber = LastNumber.Remove(LastNumber.Length - 1);
+
+                if (textExpression.Length != 0)
+                {
+                    lastSymbol = textExpression[textExpression.Length - 1];
+                }
+                else
+                {
+                    lastSymbol = ' ';
+                }
+            }
         }
     }
 }
