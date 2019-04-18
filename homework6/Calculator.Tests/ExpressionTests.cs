@@ -6,12 +6,12 @@ namespace Calculator.Tests
     [TestFixture]
     public class ExpressionTests
     {
-        private Expression testExpression;
+        private ExpressionBuilder testExpression;
 
         [SetUp]
         public void SetUp()
         {
-            testExpression = new Expression();
+            testExpression = new ExpressionBuilder();
         }
 
         [TestCase("B", ExpectedResult = "(")]
