@@ -124,7 +124,7 @@ namespace Calculator
         {
             if (!char.IsDigit(digit))
             {
-                throw new ArgumentException("Argument was not a digit value.");
+                throw new ArgumentException();
             }
 
             if (LastSymbol != ')' && CurrentNumber != "0" && CurrentNumber != "-0")
@@ -158,7 +158,7 @@ namespace Calculator
         {
             if (!IsOperation(operation))
             {
-                throw new ArgumentException("Argument was not a valid operation symbol.");
+                throw new ArgumentException();
             }
 
             if (LastSymbol == ')' || HasNumberDigits)

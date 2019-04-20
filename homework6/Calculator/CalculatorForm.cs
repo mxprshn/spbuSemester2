@@ -14,27 +14,6 @@ namespace Calculator
     {
         private ExpressionBuilder currentExpression = new ExpressionBuilder();
 
-        private void GetResult()
-        {
-            try
-            {
-                if (currentExpression.Complete())
-                {
-                    var result = InfixCalculator.Calculate(currentExpression.Expression);
-                    var evaluatedExpression = currentExpression.Expression;
-                    currentExpression.Clear();
-                    currentExpression.ResetCurrentNumber(result);
-                    expressionTextBox.Text = evaluatedExpression;
-                }
-            }
-
-            catch (DivideByZeroException)
-            {
-                currentExpression.Clear();
-                currentNumberTextBox.Text = "ой";
-            }
-        }
-
         public CalculatorForm()
         {
             InitializeComponent();
@@ -45,7 +24,27 @@ namespace Calculator
         private void CommaButtonClick(object sender, EventArgs e) => currentExpression.AddComma();
         private void BracketButtonClick(object sender, EventArgs e) => currentExpression.AddBracket();
 
-        private void ResultButtonClick(object sender, EventArgs e) => GetResult();
+        private void ResultButtonClick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (currentExpression.Complete())
+                {
+                    var result = InfixCalculator.Calculate(currentExpression.Expression);
+                    var evaluatedExpression = currentExpression.Expression;
+                    currentExpression.Clear();
+                    currentExpression.ResetCurrentNumber(result);
+                    expressionTextBox.Text = evaluatedExpression;
+
+                }                                
+            }
+
+            catch (DivideByZeroException)
+            {
+                currentExpression.Clear();
+                currentNumberTextBox.Text = "ой";
+            }
+        }
 
         private void ZeroButtonClick(object sender, EventArgs e) => currentExpression.AddDigit('0');
         private void OneButtonClick(object sender, EventArgs e) => currentExpression.AddDigit('1');
@@ -68,45 +67,5 @@ namespace Calculator
         private void PlusButtonClick(object sender, EventArgs e) => currentExpression.AddOperation('+');
 
         private void BackspaceButtonClick(object sender, EventArgs e) => currentExpression.DeleteLast();
-
-        private void CalculatorFormKeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsDigit(e.KeyChar))
-            {
-                currentExpression.AddDigit(e.KeyChar);
-            }
-            else if (e.KeyChar == '+')
-            {
-                currentExpression.AddOperation('+');
-            }
-            else if (e.KeyChar == '-')
-            {
-                currentExpression.AddOperation('-');
-            }
-            else if (e.KeyChar == '*')
-            {
-                currentExpression.AddOperation('×');
-            }
-            else if (e.KeyChar == '/')
-            {
-                currentExpression.AddOperation('÷');
-            }
-            else if (e.KeyChar == '%')
-            {
-                currentExpression.AddOperation('%');
-            }
-            else if (e.KeyChar == ',')
-            {
-                currentExpression.AddComma();
-            }
-            else if (e.KeyChar == '(' || e.KeyChar == ')')
-            {
-                currentExpression.AddBracket();
-            }
-            else if (e.KeyChar == '=')
-            {
-                GetResult();
-            }
-        }
     }
 }
