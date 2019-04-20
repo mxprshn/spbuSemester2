@@ -9,7 +9,7 @@ namespace Calculator
 {
     public static class InfixCalculator
     {
-        private static readonly string[] highPrecedenceOperators = new string[] { "*", "/", "%" };
+        private static readonly string[] highPrecedenceOperators = new string[] { "×", "÷", "%" };
         private static readonly string[] lowPrecedenceOperators = new string[] { "+", "-" };
 
         private static bool IsHighPrecedence(string operation) => highPrecedenceOperators.Contains(operation);
@@ -17,7 +17,7 @@ namespace Calculator
 
         private static List<string> ParseToPostfix(string infixExpression)
         {
-            var tokenMatches = Regex.Matches(infixExpression, @"(?<![\d)]\s*)-?\d+(,\d)?\d?|[()*/+%-]");
+            var tokenMatches = Regex.Matches(infixExpression, @"(?<![\d)]\s*)-?\d+(,\d)?\d?|[()×÷+%-]");
             var tokens = new List<string>();
             var output = new List<string>();
             var operationsAndBrackets = new Stack<string>();
@@ -122,14 +122,24 @@ namespace Calculator
                                 calculationStack.Push(operand2 - operand1);
                                 break;
                             }
-                        case '*':
+                        case '×':
                             {
                                 calculationStack.Push(operand1 * operand2);
                                 break;
                             }
-                        case '/':
+                        case '÷':
                             {
+                                if (operand1 == 0)
+                                {
+                                    throw new DivideByZeroException();
+                                }
+
                                 calculationStack.Push(operand2 / operand1);
+                                break;
+                            }
+                        case '%':
+                            {
+                                calculationStack.Push(operand2 * operand1 * 0.01);
                                 break;
                             }
                     }
