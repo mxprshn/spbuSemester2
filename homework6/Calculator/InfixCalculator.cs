@@ -2,11 +2,12 @@
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calculator
 {
+    /// <summary>
+    /// Class calculating an expression in infix notation.
+    /// </summary>
     public static class InfixCalculator
     {
         private static readonly string[] highPrecedenceOperators = new string[] { "×", "÷", "%" };
@@ -27,146 +28,140 @@ namespace Calculator
                 tokens.Add(token.Value);
             }
 
-            foreach (var token in tokens)
+            try
             {
-                if (double.TryParse(token, out _))
+                foreach (var token in tokens)
                 {
-                    output.Add(token);
-                }
-                else if (token == "(")
-                {
-                    operationsAndBrackets.Push(token);
-                }
-                else if (IsHighPrecedence(token))
-                {
-                    while (operationsAndBrackets.Count != 0 && IsHighPrecedence(operationsAndBrackets.Peek()))
+                    if (double.TryParse(token, out _))
                     {
-                        output.Add(operationsAndBrackets.Pop());
+                        output.Add(token);
                     }
-
-                    operationsAndBrackets.Push(token);
-                }
-                else if (IsLowPrecedence(token))
-                {
-                    while (operationsAndBrackets.Count != 0 && (IsHighPrecedence(operationsAndBrackets.Peek())
-                            || IsLowPrecedence(operationsAndBrackets.Peek())))
+                    else if (token == "(")
                     {
-                        output.Add(operationsAndBrackets.Pop());
+                        operationsAndBrackets.Push(token);
                     }
-
-                    operationsAndBrackets.Push(token);
-                }
-                else if (token == ")")
-                {
-                    while (operationsAndBrackets.Peek() != "(")
+                    else if (IsHighPrecedence(token))
                     {
-                        output.Add(operationsAndBrackets.Pop());
-                    }
+                        while (operationsAndBrackets.Count != 0 && IsHighPrecedence(operationsAndBrackets.Peek()))
+                        {
+                            output.Add(operationsAndBrackets.Pop());
+                        }
 
-                    operationsAndBrackets.Pop();
-                    // exception needed.
+                        operationsAndBrackets.Push(token);
+                    }
+                    else if (IsLowPrecedence(token))
+                    {
+                        while (operationsAndBrackets.Count != 0 && (IsHighPrecedence(operationsAndBrackets.Peek())
+                                || IsLowPrecedence(operationsAndBrackets.Peek())))
+                        {
+                            output.Add(operationsAndBrackets.Pop());
+                        }
+
+                        operationsAndBrackets.Push(token);
+                    }
+                    else if (token == ")")
+                    {
+                        while (operationsAndBrackets.Peek() != "(")
+                        {
+                            output.Add(operationsAndBrackets.Pop());
+                        }
+
+                        _ = operationsAndBrackets.Pop();
+                    }
                 }
+
+                foreach (var operation in operationsAndBrackets)
+                {
+                    output.Add(operation);
+                }
+
+                return output;
             }
 
-            foreach (var operation in operationsAndBrackets)
+            catch (InvalidOperationException)
             {
-                output.Add(operation);
+                throw new FormatException("Incorrect infix notation expression.");
             }
-
-            return output;
         }
 
+        /// <summary>
+        /// Calculates an infix notation expression.
+        /// </summary>
+        /// <param name="infixExpression">Infix expression to calculate.</param>
+        /// <returns>Value of the expression.</returns>
+        ///<exception cref="FormatException">Thrown in case of incorrect input expression.</exception>
         public static double Calculate(string infixExpression)
         {
             var tokens = ParseToPostfix(infixExpression);
             var calculationStack = new Stack<double>();
 
-            foreach (var token in tokens)
+            try
             {
-                if (double.TryParse(token, out double operand))
+                foreach (var token in tokens)
                 {
-                    calculationStack.Push(operand);
-                }
-                else if (char.TryParse(token, out char operation))
-                {
-                    double operand1 = 0;
-                    double operand2 = 0;
+                    if (double.TryParse(token, out double operand))
+                    {
+                        calculationStack.Push(operand);
+                    }
+                    else if (char.TryParse(token, out char operation))
+                    {
+                        var operand1 = calculationStack.Pop();
+                        var operand2 = calculationStack.Pop();
 
-                    if (calculationStack.Count != 0)
-                    {
-                        operand1 = calculationStack.Pop();
-                    }
-                    else
-                    {
-                        throw new FormatException("Incorrect input");
-                    }
-
-                    if (calculationStack.Count != 0)
-                    {
-                        operand2 = calculationStack.Pop();
-                    }
-                    else
-                    {
-                        throw new FormatException("Incorrect input");
-                    }
-
-                    switch (operation)
-                    {
-                        case '+':
-                            {
-                                calculationStack.Push(operand1 + operand2);
-                                break;
-                            }
-                        case '-':
-                            {
-                                calculationStack.Push(operand2 - operand1);
-                                break;
-                            }
-                        case '×':
-                            {
-                                calculationStack.Push(operand1 * operand2);
-                                break;
-                            }
-                        case '÷':
-                            {
-                                if (operand1 == 0)
+                        switch (operation)
+                        {
+                            case '+':
                                 {
-                                    throw new DivideByZeroException();
+                                    calculationStack.Push(operand1 + operand2);
+                                    break;
                                 }
+                            case '-':
+                                {
+                                    calculationStack.Push(operand2 - operand1);
+                                    break;
+                                }
+                            case '×':
+                                {
+                                    calculationStack.Push(operand1 * operand2);
+                                    break;
+                                }
+                            case '÷':
+                                {
+                                    if (operand1 == 0)
+                                    {
+                                        throw new DivideByZeroException();
+                                    }
 
-                                calculationStack.Push(operand2 / operand1);
-                                break;
-                            }
-                        case '%':
-                            {
-                                calculationStack.Push(operand2 * operand1 * 0.01);
-                                break;
-                            }
+                                    calculationStack.Push(operand2 / operand1);
+                                    break;
+                                }
+                            case '%':
+                                {
+                                    calculationStack.Push(operand2 * operand1 * 0.01);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("Incorrect infix notation expression.");
                     }
                 }
-                else
+
+                var value = calculationStack.Pop();
+
+                if (calculationStack.Count != 0)
                 {
-                    throw new FormatException("Incorrect input");
+                    throw new FormatException("Incorrect infix notation expression.");
                 }
+
+                return value;
             }
 
-            double value = 0;
-
-            if (calculationStack.Count != 0)
+            catch (InvalidOperationException)
             {
-                value = calculationStack.Pop();
-            }
-            else
-            {
-                throw new FormatException("Incorrect input");
-            }
-
-            if (calculationStack.Count != 0)
-            {
-                throw new FormatException("Incorrect input");
-            }
-
-            return value;
+                throw new FormatException("Incorrect infix notation expression.");
+            }            
         }
     }
 }
