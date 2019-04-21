@@ -78,6 +78,7 @@ namespace Calculator
         /// <param name="newValue">New value of CurrentNumber.</param>
         public void ResetCurrentNumber(double newValue)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU", false);
             CurrentNumber = string.Format("{0:0.##########}", newValue);
         }
 
