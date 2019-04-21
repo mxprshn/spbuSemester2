@@ -10,15 +10,15 @@ namespace Calculator
     /// </summary>
     public static class InfixCalculator
     {
-        private static readonly string[] highPrecedenceOperators = new string[] { "×", "÷", "%" };
-        private static readonly string[] lowPrecedenceOperators = new string[] { "+", "-" };
+        private static readonly string[] HighPrecedenceOperators = new string[] { "×", "÷", "%" };
+        private static readonly string[] LowPrecedenceOperators = new string[] { "+", "-" };
 
-        private static bool IsHighPrecedence(string operation) => highPrecedenceOperators.Contains(operation);
-        private static bool IsLowPrecedence(string operation) => lowPrecedenceOperators.Contains(operation);
+        private static bool IsHighPrecedence(string operation) => HighPrecedenceOperators.Contains(operation);
+        private static bool IsLowPrecedence(string operation) => LowPrecedenceOperators.Contains(operation);
 
         private static List<string> ParseToPostfix(string infixExpression)
         {
-            var tokenMatches = Regex.Matches(infixExpression, @"(?<![\d)]\s*)-?\d+(,\d)?\d?|[()×÷+%-]");
+            var tokenMatches = Regex.Matches(infixExpression, @"(?<![\d)]\s*)-?\d+(,\d)?\d*|[()×÷+%-]");
             var tokens = new List<string>();
             var output = new List<string>();
             var operationsAndBrackets = new Stack<string>();

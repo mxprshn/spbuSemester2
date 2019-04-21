@@ -18,7 +18,7 @@ namespace Calculator
 
         private string expression = "";
         private string currentNumber = "";
-        private static readonly char[] operations = new char[] { '×', '÷', '+', '-', '%' };
+        private static readonly char[] Operations = new char[] { '×', '÷', '+', '-', '%' };
 
         /// <summary>
         /// Expression built at the moment.
@@ -59,10 +59,15 @@ namespace Calculator
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool IsOperation(char symbol) => operations.Contains(symbol);
+        private bool IsOperation(char symbol) => Operations.Contains(symbol);
 
         private void AddCurrentNumber()
         {
+            if (CurrentNumber.Length != 0 && CurrentNumber[CurrentNumber.Length - 1] == ',')
+            {
+                CurrentNumber += '0';
+            }
+
             Expression += CurrentNumber;
             CurrentNumber = "";
         }
@@ -73,7 +78,7 @@ namespace Calculator
         /// <param name="newValue">New value of CurrentNumber.</param>
         public void ResetCurrentNumber(double newValue)
         {
-            CurrentNumber = newValue.ToString();
+            CurrentNumber = string.Format("{0:0.##########}", newValue);
         }
 
         /// <summary>
@@ -82,17 +87,19 @@ namespace Calculator
         /// <returns>True if the expression was completed, False otherwise.</returns>
         public bool Complete()
         {
-            if (!HasNumberDigits)
+            if (IsOperation(LastSymbol) || LastSymbol == '(' || Expression.Length == 0)
             {
-                return false;
+                if (!HasNumberDigits)
+                {
+                    return false;
+                }
+                else
+                {
+                    AddCurrentNumber();
+                }
             }
 
-            AddCurrentNumber();
-
-            if (char.IsDigit(LastSymbol))
-            {
-                Expression += new string(')', bracketStack.Count);
-            }
+            Expression += new string(')', bracketStack.Count);
 
             return true;
         }

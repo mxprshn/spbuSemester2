@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Calculator
@@ -24,7 +17,8 @@ namespace Calculator
                     var evaluatedExpression = currentExpression.Expression;
                     currentExpression.Clear();
                     currentExpression.ResetCurrentNumber(result);
-                    expressionTextBox.Text = evaluatedExpression;
+                    currentNumberTextBox.SelectionStart = 0;
+                    expressionTextBox.Text = $"{evaluatedExpression} = {currentExpression.CurrentNumber}";
                 }
             }
 
@@ -59,7 +53,6 @@ namespace Calculator
         private void NineButtonClick(object sender, EventArgs e) => currentExpression.AddDigit('9');
 
         private void ClearButtonClick(object sender, EventArgs e) => currentExpression.Clear();
-
 
         private void DivisionButtonClick(object sender, EventArgs e) => currentExpression.AddOperation('÷');
         private void CrossButtonClick(object sender, EventArgs e) => currentExpression.AddOperation('×');
@@ -108,5 +101,16 @@ namespace Calculator
                 GetResult();
             }
         }
+
+        private void CalculatorFormKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                currentExpression.DeleteLast();
+            }
+        }
+
+        private void CurrentNumberTextBoxTextChanged(object sender, EventArgs e) =>
+            currentNumberTextBox.SelectionStart = currentNumberTextBox.Text.Length;
     }
 }
