@@ -92,6 +92,8 @@ namespace Calculator
         ///<exception cref="FormatException">Thrown in case of incorrect input expression.</exception>
         public static double Calculate(string infixExpression)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU", false);
+
             var tokens = ParseToPostfix(infixExpression);
             var calculationStack = new Stack<double>();
 
