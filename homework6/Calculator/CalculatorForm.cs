@@ -18,12 +18,22 @@ namespace Calculator
                     currentExpression.Clear();
                     currentExpression.ResetCurrentNumber(result);
                     currentNumberTextBox.SelectionStart = 0;
-                    expressionTextBox.Text = $"{evaluatedExpression} = {currentExpression.CurrentNumber}";
+
+                    if (currentNumberTextBox.Text.Length >= 15)
+                    {
+                        expressionTextBox.Text = $"WARNING: rounding errors are possible.\n" +
+                            $"{evaluatedExpression} = {currentExpression.CurrentNumber}";
+                    }
+                    else
+                    {
+                        expressionTextBox.Text = $"{evaluatedExpression} = {currentExpression.CurrentNumber}";
+                    }                    
                 }
             }
 
             catch (DivideByZeroException)
             {
+                currentNumberTextBox.SelectionStart = 0;
                 currentExpression.Clear();
                 currentNumberTextBox.Text = "ой";
             }

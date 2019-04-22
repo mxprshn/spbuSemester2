@@ -92,6 +92,7 @@ namespace Calculator
         ///<exception cref="FormatException">Thrown in case of incorrect input expression.</exception>
         public static double Calculate(string infixExpression)
         {
+            // To format doubles with commas.
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU", false);
 
             var tokens = ParseToPostfix(infixExpression);
