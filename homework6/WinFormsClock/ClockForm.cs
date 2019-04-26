@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinFormsClock
 {
     public partial class ClockForm : Form
     {
-        public ClockForm() => InitializeComponent();
+        private PrivateFontCollection clockFonts = new PrivateFontCollection();
+
+        public ClockForm()
+        {
+            clockFonts.AddFontFile("HelveticaNeueCyr-Bold.ttf");
+            clockFonts.AddFontFile("HelveticaNeueCyr-Roman.ttf");
+            InitializeComponent();
+        }
 
         private void UpdateTimerTick(object sender, EventArgs e)
         {
