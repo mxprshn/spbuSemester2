@@ -42,7 +42,7 @@
             this.timeLabel.AutoSize = true;
             this.timeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timeLabel.Font = new System.Drawing.Font("HelveticaNeueCyr", 100.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.timeLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 100.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.timeLabel.ForeColor = System.Drawing.Color.IndianRed;
             this.timeLabel.Location = new System.Drawing.Point(33, 30);
             this.timeLabel.Name = "timeLabel";
@@ -75,7 +75,7 @@
             // 
             this.dateLabel.AutoSize = true;
             this.dateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateLabel.Font = new System.Drawing.Font("HelveticaNeueCyr", 50F);
+            this.dateLabel.Font = new System.Drawing.Font("Segoe UI Light", 35.2F);
             this.dateLabel.ForeColor = System.Drawing.Color.DimGray;
             this.dateLabel.Location = new System.Drawing.Point(33, 256);
             this.dateLabel.Name = "dateLabel";
