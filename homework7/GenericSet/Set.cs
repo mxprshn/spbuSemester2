@@ -28,10 +28,9 @@ namespace GenericSet
 
         public int Count { get; private set; }
 
-        public bool Contains(T targetValue)
-        {
-            return FindNode(targetValue) != null;
-        }
+        public bool IsReadOnly { get; } = false;
+
+        public bool Contains(T targetValue) => FindNode(targetValue) != null;
 
         public bool Add(T newValue)
         {
@@ -69,10 +68,7 @@ namespace GenericSet
             return true;
         }
 
-        void ICollection<T>.Add(T newValue)
-        {
-            _ = Add(newValue);
-        }
+        void ICollection<T>.Add(T newValue) => _ = Add(newValue);
 
         private Node FindNode(T targetValue)
         {
@@ -86,48 +82,6 @@ namespace GenericSet
             return temp;
         }
 
-        //private void RemoveNoChildren(Node targetNode)
-        //{
-        //    targetNode.Parent.
-        //}
-
-        //private void RemoveOneChild(Node targetNode)
-        //{
-
-        //}
-
-        //private void RemoveTwoChildren(Node targetNode)
-        //{
-
-        //}
-
-        //private void RemoveByNode(Node currentNode, T targetValue)
-        //{
-        //    if (targetValue.CompareTo(currentNode.Value) < 0)
-        //    {
-        //        RemoveByNode(currentNode.LeftChild, targetValue);
-        //    }
-        //    else if (targetValue.CompareTo(currentNode.Value) > 0)
-        //    {
-        //        RemoveByNode(currentNode.RightChild, targetValue);
-        //    }
-        //    else
-        //    {
-        //        if (currentNode.LeftChild == null && currentNode.RightChild == null)
-        //        {
-        //            RemoveNoChildren(currentNode);
-        //        }
-        //        else if (currentNode.LeftChild != null && currentNode.RightChild != null)
-        //        {
-        //            RemoveTwoChildren(currentNode);
-        //        }
-        //        else
-        //        {
-        //            RemoveOneChild(currentNode);
-        //        }
-        //    }
-        //}
-
         public bool Remove(T targetValue)
         {
             var targetNode = FindNode(targetValue);
@@ -140,16 +94,36 @@ namespace GenericSet
             if (targetNode.LeftChild == null)
             {
                 Transplant(targetNode, targetNode.RightChild);
-                targetNode.RightChild = null;
             }
             else if (targetNode.RightChild == null)
             {
                 Transplant(targetNode, targetNode.LeftChild);
-                targetNode.LeftChild = null;
             }
+            else
+            {
+                var rightMinimum = Minimum(targetNode.RightChild);
+
+                if (!targetNode.Equals(rightMinimum.Parent))
+                {
+                    Transplant(rightMinimum, rightMinimum.RightChild);
+                    rightMinimum.RightChild = targetNode.RightChild;
+                    rightMinimum.RightChild.Parent = rightMinimum;
+                }
+
+                Transplant(targetNode, rightMinimum);
+
+                rightMinimum.LeftChild = targetNode.LeftChild;
+                rightMinimum.LeftChild.Parent = rightMinimum;
+            }
+
+            --Count;
+            return true;
         }
 
-        private T Minimum()
+        private Node Minimum(Node start)
+        {
+            return start.LeftChild == null ? start : Minimum(start.LeftChild);
+        }
 
         private void Transplant(Node target, Node source)
         {
@@ -170,6 +144,12 @@ namespace GenericSet
             {
                 source.Parent = target.Parent;
             }
+        }
+
+        public void Clear()
+        {
+            Count = 0;
+            root = null;
         }
     }
 }
