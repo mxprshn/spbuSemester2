@@ -8,16 +8,12 @@ namespace Test2.Tests
     public class SortedSetTests
     {
         private SortedSet<List<string>, string> testListString;
-        private SortedSet<List<int>, int> testListInt;
 
         [SetUp]
         public void SetUp()
         {
             testListString = new SortedSet<List<string>, string>();
-            testListInt = new SortedSet<List<int>, int>();
         }
-
-
 
         [TestCaseSource("TestsCasesString")]
         public void AddTestStringTest(List<string>[] lists, List<string>[] expected)
@@ -32,8 +28,6 @@ namespace Test2.Tests
                 Assert.AreEqual(expected[i], testListString[i]);
             }
         }
-
-
 
         private static object[] TestsCasesString =
         {
@@ -57,6 +51,5 @@ namespace Test2.Tests
                 },
             }
         };
-
     }
 }

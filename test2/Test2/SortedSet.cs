@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test2
 {
+    /// <summary>
+    /// Class implementing sorted set of lists.
+    /// </summary>
+    /// <typeparam name="T">List type.</typeparam>
+    /// <typeparam name="U">Type of list elements.</typeparam>
     public class SortedSet<T, U> where T : IList<U> 
     {
         private List<T> elements = new List<T>();
