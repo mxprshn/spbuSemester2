@@ -151,5 +151,12 @@ namespace GenericSet
             Count = 0;
             root = null;
         }
+
+        private class TreeTraverser : IEnumerator<T>
+        {
+
+        }
+
+        public IEnumerator<T> GetEnumerator() => new TreeTraverser();
     }
 }
