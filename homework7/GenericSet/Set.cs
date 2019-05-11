@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -120,10 +121,7 @@ namespace GenericSet
             return true;
         }
 
-        private Node Minimum(Node start)
-        {
-            return start.LeftChild == null ? start : Minimum(start.LeftChild);
-        }
+        private Node Minimum(Node start) => start.LeftChild == null ? start : Minimum(start.LeftChild);
 
         private void Transplant(Node target, Node source)
         {
@@ -152,11 +150,175 @@ namespace GenericSet
             root = null;
         }
 
-        private class TreeTraverser : IEnumerator<T>
+        public void CopyTo(T[] array, int arrayIndex)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException();
+            }
 
+            if (arrayIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (array.Length - arrayIndex < Count)
+            {
+                throw new ArgumentException();
+            }
+
+            var position = arrayIndex;
+
+            foreach (var current in this)
+            {
+                array[position] = current;
+                ++position;
+            }
         }
 
-        public IEnumerator<T> GetEnumerator() => new TreeTraverser();
+        public void UnionWith(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (var current in other)
+            {
+                _ = Add(current);
+            }
+        }
+
+        public void IntersectWith(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var toRemove = new List<T>();
+
+            foreach (var current in this)
+            {
+                if (!other.Contains(current))
+                {
+                    toRemove.Add(current);
+                }
+            }
+
+            ExceptWith(toRemove);
+        }
+
+        public void ExceptWith(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (var current in other)
+            {
+                Remove(current);
+            }
+        }
+
+        public void SymmetricExceptWith(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var intersection = new Set<T>();
+            intersection.UnionWith(this);
+            intersection.IntersectWith(other);
+            UnionWith(other);
+            ExceptWith(intersection);
+        }
+
+        public bool IsSubsetOf(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (var current in this)
+            {
+                if (!other.Contains(current))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool IsSupersetOf(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (var current in other)
+            {
+                if (!Contains(current))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool IsProperSubsetOf(IEnumerable<T> other) => IsSubsetOf(other) && !IsSupersetOf(other);
+
+        public bool IsProperSupersetOf(IEnumerable<T> other) => !IsSubsetOf(other) && IsSupersetOf(other);
+
+        public bool SetEquals(IEnumerable<T> other) => IsSubsetOf(other) && IsSupersetOf(other);
+
+        public bool Overlaps(IEnumerable<T> other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (var current in this)
+            {
+                if (other.Contains(current))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var nodeStack = new Stack<Node>();
+            var current = root;
+
+            while (nodeStack.Count > 0 || root != null)
+            {
+                if (current == null)
+                {
+                    current = nodeStack.Pop();
+                    yield return current.Value;
+                    current = current.RightChild;
+                }
+                else
+                {
+                    nodeStack.Push(current);
+                    current = current.LeftChild;
+                }
+            }
+
+            yield break;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
