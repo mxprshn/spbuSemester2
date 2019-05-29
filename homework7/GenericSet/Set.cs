@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GenericSet
 {
@@ -47,8 +45,8 @@ namespace GenericSet
                 return true;
             }
 
-            Node possibleParent = root;
-            bool isLeft = newValue.CompareTo(root.Value) < 0;
+            var possibleParent = root;
+            var isLeft = newValue.CompareTo(root.Value) < 0;
 
             while (isLeft && possibleParent.LeftChild != null || !isLeft && possibleParent.RightChild != null)
             {
@@ -301,7 +299,7 @@ namespace GenericSet
             var nodeStack = new Stack<Node>();
             var current = root;
 
-            while (nodeStack.Count > 0 || root != null)
+            while (nodeStack.Count > 0 || current != null)
             {
                 if (current == null)
                 {
