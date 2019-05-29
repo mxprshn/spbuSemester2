@@ -2,6 +2,7 @@ image: Visual Studio 2017
 
 environment:
   matrix:
+  - solution_path: homework7\GenericSet\GenericSet.sln
   - solution_path: homework1\FibonacciFactorial.sln
   - solution_path: homework1\matrix_sort.sln
   - solution_path: homework1\QuickSort.sln
