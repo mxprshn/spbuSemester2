@@ -66,7 +66,7 @@ namespace GenericList
             }
             else
             {
-                Insert(0, newValue);
+                head = new Node(newValue, head);
             }
 
             ++Count;
