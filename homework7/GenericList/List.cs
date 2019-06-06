@@ -23,16 +23,11 @@ namespace GenericList
         public int Count { get; private set; }
         public bool IsReadOnly { get; } = false;
 
-        private Node FindNode(int position)
+        private Node FindByPosition(int position)
         {
-            if (Count == 0)
-            {
-                throw new InvalidOperationException("The list was empty");
-            }
-
             if (position < 0 || position >= Count)
             {
-                throw new ArgumentOutOfRangeException("Incorrect index of position");
+                throw new ArgumentOutOfRangeException();
             }
 
             var current = head;
@@ -45,26 +40,52 @@ namespace GenericList
             return current;
         }
         
+        private (Node node, int position) FindByValue(T value)
+        {
+            var current = head;
+
+            for (var i = 0; i < Count; ++i)
+            {
+                if (current.Value.Equals(value))
+                {
+                    return (current, i);
+                }
+
+                current = current.Next;
+            }
+
+            return (null, -1);
+        }
+
         public void Add(T newValue)
         {
-            head = new Node(newValue, head);
+            if (Count != 0)
+            {
+                var previousNode = FindByPosition(Count - 1);
+                previousNode.Next = new Node(newValue);
+            }
+            else
+            {
+                head = new Node(newValue, head);
+            }
+
             ++Count;
         }
 
         public void Insert(int position, T newValue)
         {
-            if (position > Count)
+            if (position < 0 || position >= Count)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             if (position == 0)
             {
-                Add(newValue);
+                head = new Node(newValue, head);
             }
             else
             {
-                var previousNode = FindNode(position - 1);
+                var previousNode = FindByPosition(position - 1);
                 previousNode.Next = new Node(newValue, previousNode.Next);
             }
 
@@ -84,7 +105,7 @@ namespace GenericList
             }
             else
             {
-                var previousNode = FindNode(position - 1);
+                var previousNode = FindByPosition(position - 1);
                 previousNode.Next = previousNode.Next.Next;
             }
 
@@ -93,49 +114,44 @@ namespace GenericList
 
         public bool Remove(T value)
         {
+            var second = head;
+            Node first = null;
 
-        }
-
-        public T this[int position]
-        {
-            get => FindNode(position).Value;
-
-            set => FindNode(position).Value = value;
-        }
-
-        public bool Contains(T value)
-        {
-            var current = head;
-
-            for (var i = 0; i < Count; ++i)
+            while (second != null)
             {
-                if (current.Value.Equals(value))
+                if (second.Value.Equals(value))
                 {
+                    if (first != null)
+                    {
+                        first.Next = second.Next;
+                    }
+                    else
+                    {
+                        head = second.Next;
+                        second.Next = null;
+                    }
+
+                    --Count;
                     return true;
                 }
 
-                current = current.Next;
+                first = second;
+                second = second.Next;
             }
 
             return false;
         }
 
-        public int IndexOf(T value)
+        public T this[int position]
         {
-            var current = head;
+            get => FindByPosition(position).Value;
 
-            for (var i = 0; i < Count; ++i)
-            {
-                if (current.Value.Equals(value))
-                {
-                    return i;
-                }
-
-                current = current.Next;
-            }
-
-            return -1;
+            set => FindByPosition(position).Value = value;
         }
+
+        public bool Contains(T value) => FindByValue(value).position != -1;
+
+        public int IndexOf(T value) => FindByValue(value).position;
 
         public void CopyTo(T[] array, int arrayIndex)
         {
