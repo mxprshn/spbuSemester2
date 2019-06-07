@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace GenericSet
 {
+    /// <summary>
+    /// Class representing generic set data structure with unique elements.
+    /// </summary>
+    /// <typeparam name="T">Type of the set elements.</typeparam>
     public class Set<T> : ISet<T> where T : IComparable<T>
     {
         private class Node
