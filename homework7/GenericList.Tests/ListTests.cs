@@ -65,7 +65,7 @@ namespace GenericList.Tests
             testList.Add(1);
             testList.Add(2);
             testList.Add(3);
-            Assert.Throws<ArgumentOutOfRangeException>(() => testList.Insert(3, 4));
+            Assert.Throws<ArgumentOutOfRangeException>(() => testList.Insert(4, 4));
         }
 
         [TestCaseSource("RemoveAtTestCases")]
@@ -245,7 +245,9 @@ namespace GenericList.Tests
             new object[] { new int[] { 0 }, new (int, int)[] { (0, 10), (1, 20), (2, 10), (3, 20) },
                     new int[] { 10, 20, 10, 20, 0 } },
             new object[] { new int[] { 0 }, new (int, int)[] { (0, 10), (0, 20), (0, 10), (0, 20) },
-                    new int[] { 20, 10, 20, 10, 0 } }
+                    new int[] { 20, 10, 20, 10, 0 } },
+            new object[] { new int[] { }, new (int, int)[] { (0, 10), (0, 20), (0, 30), (0, 40) },
+                    new int[] { 40, 30, 20, 10 } }
         };
 
         private static object[] RemoveAtTestCases =

@@ -4,6 +4,10 @@ using System.Collections;
 
 namespace GenericList
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class List<T> : IList<T>
     {
         private class Node
@@ -57,24 +61,11 @@ namespace GenericList
             return (null, -1);
         }
 
-        public void Add(T newValue)
-        {
-            if (Count != 0)
-            {
-                var previousNode = FindByPosition(Count - 1);
-                previousNode.Next = new Node(newValue);
-            }
-            else
-            {
-                head = new Node(newValue, head);
-            }
-
-            ++Count;
-        }
+        public void Add(T newValue) => Insert(Count, newValue);
 
         public void Insert(int position, T newValue)
         {
-            if (position < 0 || position >= Count)
+            if (position < 0 || position > Count)
             {
                 throw new ArgumentOutOfRangeException();
             }
